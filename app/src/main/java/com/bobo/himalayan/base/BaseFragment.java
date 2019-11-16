@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 /**
  * Created by 求知自学网 on 2019/11/16. Copyright © Leon. All rights reserved.
- * Functions: 基础fragment 注意这里继承的是 ：FragmentActivity 非 Fragment
+ * Functions: 基础fragment
  */
 public abstract class BaseFragment extends Fragment{
 

@@ -3,11 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:text="推荐界面"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        android:layout_height="wrap_content" />
+   <!--android:overScrollMode="never" 去掉划不动的时候的贝塞尔曲线-->
+   <android.support.v7.widget.RecyclerView
+       android:id="@+id/recommend_list"
+       android:background="#f4f4f4"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:overScrollMode="never"/>
 
 </RelativeLayout>
