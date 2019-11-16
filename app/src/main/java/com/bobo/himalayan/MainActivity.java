@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.bobo.himalayan.adapters.IndicatorAdapter;
 import com.bobo.himalayan.adapters.MainContentAdapter;
+import com.bobo.himalayan.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.category.Category;
@@ -32,6 +33,7 @@ public class MainActivity extends FragmentActivity {
 
     //显示首页内容的view pager
     private ViewPager mContentPager;
+    private IndicatorAdapter mIndicatorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,19 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         initView();
+        initEvent();
+    }
+
+    private void initEvent() {
+        mIndicatorAdapter.setOnIndicatorTapClickListener(new IndicatorAdapter.OnIndicatorTapClickListener() {
+            @Override
+            public void onTabClick(int index) {
+                LogUtil.e(TAG,"click inex is -->"+index);
+                if (mContentPager != null) {
+                    mContentPager.setCurrentItem(index);
+                }
+            }
+        });
     }
 
     private void initView(){
@@ -46,9 +61,10 @@ public class MainActivity extends FragmentActivity {
         mMagicIndicator.setBackgroundColor(getResources().getColor(R.color.main_color));
 
         //创建indicator的适配器
-        IndicatorAdapter adapter = new IndicatorAdapter(this);
+        mIndicatorAdapter = new IndicatorAdapter(this);
         CommonNavigator commonNavigator = new CommonNavigator(this);
-        commonNavigator.setAdapter(adapter);
+        commonNavigator.setAdjustMode(true);//自我调节平分位置
+        commonNavigator.setAdapter(mIndicatorAdapter);
 
         //创建viewpager
         mContentPager = (ViewPager)findViewById(R.id.content_pager);

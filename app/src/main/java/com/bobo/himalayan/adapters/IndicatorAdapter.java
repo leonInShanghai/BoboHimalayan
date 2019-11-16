@@ -11,6 +11,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
@@ -23,7 +24,7 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
     private String[] mTitles;
 
     //title点击事件传递的接口
-    private OnTitleSelectedListener mListener;
+    private OnIndicatorTapClickListener mOnTapClickListener;
 
     public IndicatorAdapter(Context context) {
         //获取在xml中定义好的数组
@@ -37,6 +38,23 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
 
     @Override
     public IPagerTitleView getTitleView(Context context, final int index) {
+
+//        ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
+//
+//        clipPagerTitleView.setText(mTitles[index]);
+//        clipPagerTitleView.setTextColor(Color.parseColor("#f2c4c4"));
+//        clipPagerTitleView.setClipColor(Color.WHITE);
+//
+//        clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//               //如果index不一样的话 切换viewpager的内容
+//                if (mOnTapClickListener != null){
+//                    mOnTapClickListener.onTabClick(index);
+//                }
+//            }
+//        });
+//        return clipPagerTitleView;
 
         //创建view
         ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
@@ -57,8 +75,9 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
         colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null){
-                    mListener.onTitleSelected(index);
+                //如果index不一样的话 切换viewpager的内容
+                if (mOnTapClickListener != null){
+                    mOnTapClickListener.onTabClick(index);
                 }
             }
         });
@@ -75,13 +94,15 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
     }
 
 
-    public void setOnTitleSelectedListener(OnTitleSelectedListener listener){
-        this.mListener = listener;
+    //供外界调用设置 点击事件监听
+    public void setOnIndicatorTapClickListener(OnIndicatorTapClickListener listener){
+        this.mOnTapClickListener = listener;
     }
 
     //colorTransitionPagerTitleView点击回调接口
-    public interface OnTitleSelectedListener{
-        void onTitleSelected(int index);
+    public interface OnIndicatorTapClickListener{
+        void onTabClick(int index
+        );
     }
 
 }
