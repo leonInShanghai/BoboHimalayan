@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">波波拉雅</string>
+
+    <!--首页指示器显示的数据数组-->
+    <array name="indicater_name">
+        <item>推荐</item>
+        <item>订阅</item>
+        <item>历史</item>
+    </array>
+
 </resources>

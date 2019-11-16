@@ -3,6 +3,7 @@ package com.bobo.himalayan.base;
 import android.app.Application;
 import android.util.Log;
 
+import com.bobo.himalayan.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 
@@ -19,6 +20,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        //初始化喜马拉雅SDK
         CommonRequest mXimalaya = CommonRequest.getInstanse();
         if (DTransferConstants.isRelease){
             String mAppSecret = "8646d66d6abe2efd14f2891f9fd1c8af";
@@ -33,6 +35,9 @@ public class BaseApplication extends Application {
             mXimalaya.init(this, mAppSecret);
             Log.e("BaseApplication","isDebug");
         }
+
+        //初始化自定义log  LogUtil
+        LogUtil.init(this.getPackageName(),false);
 
         }
 }
