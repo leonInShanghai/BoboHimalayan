@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by 求知自学网 on 2019/11/16. Copyright © Leon. All rights reserved.
+ * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
  * Functions: 管理  FragmentActivity  的工具类这个项目没有用fragment
  */
 public class FragmentCreator {

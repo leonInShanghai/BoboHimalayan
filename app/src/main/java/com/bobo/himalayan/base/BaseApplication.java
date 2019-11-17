@@ -1,19 +1,23 @@
 package com.bobo.himalayan.base;
 
 import android.app.Application;
+import android.os.Handler;
 import android.util.Log;
 
 import com.bobo.himalayan.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 
+
+
 /**
- * Created by 求知自学网 on 2019/11/16. Copyright © Leon. All rights reserved.
- * Functions:
+ * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
+ * Functions: Application 默认是单例
  */
 public class BaseApplication extends Application {
 
-
+     /**全局的Handler*/
+     private static Handler sHandler = null;
 
 
     @Override
@@ -36,8 +40,16 @@ public class BaseApplication extends Application {
             Log.e("BaseApplication","isDebug");
         }
 
-        //初始化自定义log  LogUtil
-        LogUtil.init(this.getPackageName(),false);
+            //初始化自定义log  LogUtil
+            LogUtil.init(this.getPackageName(),false);
 
+            sHandler = new Handler();
         }
+
+    /**
+     * 获取静态全局handler的方法
+     */
+    public static Handler getsHandler(){
+        return sHandler;
+    }
 }

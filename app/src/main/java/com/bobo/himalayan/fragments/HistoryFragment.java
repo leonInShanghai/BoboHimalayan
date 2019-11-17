@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.bobo.himalayan.base.BaseFragment;
 
 /**
- * Created by 求知自学网 on 2019/11/16. Copyright © Leon. All rights reserved.
+ * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
  * Functions: 历史fragment
  */
 public class HistoryFragment extends BaseFragment {
@@ -22,4 +22,6 @@ public class HistoryFragment extends BaseFragment {
         View rootView = layoutInflater.inflate(R.layout.fragment_history,container,false);
         return rootView;
     }
+
+
 }

@@ -16,7 +16,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorT
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 /**
- * Created by 求知自学网 on 2019/11/16. Copyright © Leon. All rights reserved.
+ * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
  * Functions: 首页的适配器继承自 MagicIndicator框架中的 CommonNavigatorAdapter
  */
 public class IndicatorAdapter extends CommonNavigatorAdapter {

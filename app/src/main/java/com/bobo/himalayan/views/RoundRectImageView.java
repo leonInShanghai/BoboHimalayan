@@ -10,7 +10,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 /**
- * Created by 求知自学网 on 2019/11/16. Copyright © Leon. All rights reserved.
+ * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
  * Functions: 自定义圆角imageview
  */
 public class RoundRectImageView extends AppCompatImageView{

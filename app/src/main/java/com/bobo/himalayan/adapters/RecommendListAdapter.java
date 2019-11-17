@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 求知自学网 on 2019/11/16. Copyright © Leon. All rights reserved.
+ * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
  * Functions: 首页 recycleview的适配器
  */
 public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdapter.InnerHolder> {

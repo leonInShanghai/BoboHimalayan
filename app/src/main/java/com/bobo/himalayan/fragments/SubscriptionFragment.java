@@ -13,7 +13,7 @@ import com.bobo.himalayan.R;
 import com.bobo.himalayan.base.BaseFragment;
 
 /**
- * Created by 求知自学网 on 2019/11/16. Copyright © Leon. All rights reserved.
+ * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
  * Functions: 订阅fragment
  */
 public class SubscriptionFragment extends BaseFragment {

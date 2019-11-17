@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.bobo.himalayan.utils.FragmentCreator;
 
 /**
- * Created by 求知自学网 on 2019/11/16. Copyright © Leon. All rights reserved.
+ * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
  * Functions: 首页 viewpager的适配器
  */
 public class MainContentAdapter extends FragmentPagerAdapter {

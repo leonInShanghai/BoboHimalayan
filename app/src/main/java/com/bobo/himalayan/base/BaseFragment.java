@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by 求知自学网 on 2019/11/16. Copyright © Leon. All rights reserved.
+ * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
  * Functions: 基础fragment
  */
 public abstract class BaseFragment extends Fragment{

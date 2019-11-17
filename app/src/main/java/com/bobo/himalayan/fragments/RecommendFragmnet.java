@@ -16,8 +16,11 @@ import android.view.ViewGroup;
 import com.bobo.himalayan.R;
 import com.bobo.himalayan.adapters.RecommendListAdapter;
 import com.bobo.himalayan.base.BaseFragment;
+import com.bobo.himalayan.interfaces.IRcommendViewCallback;
+import com.bobo.himalayan.presenters.RecommendPresenter;
 import com.bobo.himalayan.utils.Constants;
 import com.bobo.himalayan.utils.LogUtil;
+import com.bobo.himalayan.views.UILoader;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
@@ -31,13 +34,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by 求知自学网 on 2019/11/16. Copyright © Leon. All rights reserved.
+ * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
  * Functions: 推荐页面的fragment
  */
-public class RecommendFragmnet extends BaseFragment {
-
-
-    public static final String TAG = "RecommendFragmnet";
+public class RecommendFragmnet extends BaseFragment implements IRcommendViewCallback {
 
     private  View mRootView;
 
@@ -46,8 +46,42 @@ public class RecommendFragmnet extends BaseFragment {
     //适配器
     private RecommendListAdapter mRecommendListAdapter;
 
+    private RecommendPresenter mRecommendPresenter;
+
+    private UILoader mUILoader;
+
     @Override
-    public View onSubViewLoaded(LayoutInflater layoutInflater,ViewGroup container) {
+    public View onSubViewLoaded(final LayoutInflater layoutInflater,ViewGroup container) {
+
+        mUILoader = new UILoader(getContext()) {
+            @Override
+            protected View getSuccessView(ViewGroup container1) {
+                return createSuccessView(layoutInflater,container1);
+            }
+        };
+
+        //获取到逻辑层的数据对象
+        mRecommendPresenter = RecommendPresenter.getsInstance();
+
+        //先要设置通知接口的注册
+        mRecommendPresenter.registerViewCallback(this);
+
+        //获取推荐列表
+        mRecommendPresenter.getRecommendList();
+
+        if (mUILoader.getParent() instanceof ViewGroup) {
+            ((ViewGroup) mUILoader.getParent()).removeView(mUILoader);
+        }
+
+        //返回view，给界面显示
+        return mUILoader;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private View createSuccessView(LayoutInflater layoutInflater,ViewGroup container) {
         //view加载完成
         mRootView = layoutInflater.inflate(R.layout.fragment_recommend, container,false);
 
@@ -74,49 +108,43 @@ public class RecommendFragmnet extends BaseFragment {
         mRecommendListAdapter = new RecommendListAdapter();
         mRecyclerView.setAdapter(mRecommendListAdapter);
 
-        //去拿数据过来
-        getRecommendData();
-
-        //返回view，给界面显示
         return mRootView;
     }
 
-    /**
-     * 获取推荐内容，其实就是猜你喜欢
-     * 这个接口：3.10.6
-     */
-    private void getRecommendData() {
-        //封装参数
-        Map<String,String> map = new HashMap<>();
+    @Override
+    public void onRecommendListLoaded(List<Album> result) {
+        //当我们获取到推荐内容的时候这个方法就会被调用（成功了）数据回来以后就是更新UI
+        mRecommendListAdapter.setData(result); //把数据设置给适配器并且更新
 
-        //这个参数表示一页数据返回多少条
-        map.put(DTransferConstants.LIKE_COUNT, Constants.RECOMMAND_COUNT+"");
-        CommonRequest.getGuessLikeAlbum(map, new IDataCallBack<GussLikeAlbumList>() {
-            @Override
-            public void onSuccess(@Nullable GussLikeAlbumList gussLikeAlbumList) {
-                LogUtil.d(TAG,"thread name--->"+Thread.currentThread().getName());
-                //数据获取成功
-                if (gussLikeAlbumList != null) {
-                    List<Album> albumList = gussLikeAlbumList.getAlbumList();
-
-                    //数据请求回来更新UI
-                    upRecommendUI(albumList);
-                }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                //数据获取失败
-                LogUtil.e(TAG,"error -->"+i);
-                LogUtil.e(TAG,"errorMsg -->"+s);
-            }
-        });
-
+        //切换到成功的界面
+        mUILoader.updateStatus(UILoader.UIStatus.SUCCESS);
     }
 
-    //更新UI
-    private void upRecommendUI(List<Album> albumList) {
-        //把数据设置给适配器并且更新
-        mRecommendListAdapter.setData(albumList);
+    @Override
+    public void onNetworkError() {
+       //切换到加载失败页面
+       mUILoader.updateStatus(UILoader.UIStatus.NEWWORK_ERROR);
+    }
+
+    @Override
+    public void onEmpty() {
+        //切换到空的界面
+        mUILoader.updateStatus(UILoader.UIStatus.EMPTY);
+    }
+
+    @Override
+    public void onLoading() {
+        //切换到加载的界面
+        mUILoader.updateStatus(UILoader.UIStatus.LOADING);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        //在onCreateView 方法中注册 对应的也要在本方法中解除注册,避免内存泄露
+        if (mRecommendPresenter != null) {
+            mRecommendPresenter.unRegisterViewCallback(this);
+        }
     }
 }
