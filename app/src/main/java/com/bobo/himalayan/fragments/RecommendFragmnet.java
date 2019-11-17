@@ -37,7 +37,8 @@ import java.util.Map;
  * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
  * Functions: 推荐页面的fragment
  */
-public class RecommendFragmnet extends BaseFragment implements IRcommendViewCallback {
+public class RecommendFragmnet extends BaseFragment implements IRcommendViewCallback,UILoader.
+        OnRetryClickListener {
 
     private  View mRootView;
 
@@ -59,6 +60,9 @@ public class RecommendFragmnet extends BaseFragment implements IRcommendViewCall
                 return createSuccessView(layoutInflater,container1);
             }
         };
+
+        //设置加载失败用户点击重新请求的接口代理为this
+        mUILoader.setOnRetryClickListener(this);
 
         //获取到逻辑层的数据对象
         mRecommendPresenter = RecommendPresenter.getsInstance();
@@ -145,6 +149,14 @@ public class RecommendFragmnet extends BaseFragment implements IRcommendViewCall
         //在onCreateView 方法中注册 对应的也要在本方法中解除注册,避免内存泄露
         if (mRecommendPresenter != null) {
             mRecommendPresenter.unRegisterViewCallback(this);
+        }
+    }
+
+    @Override
+    public void onRetryClick() {
+        //加载失败用户点击了重新请求
+        if (mRecommendPresenter != null){
+            mRecommendPresenter.getRecommendList();
         }
     }
 }

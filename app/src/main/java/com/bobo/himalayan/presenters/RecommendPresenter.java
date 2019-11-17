@@ -105,6 +105,7 @@ public class RecommendPresenter implements IRecommendPresenter {
 
     //请求成功通知ui更新
     private void handlerRecommendResult(List<Album> albumList){
+
         //通知UI界面更新
         if (albumList != null) {
             if (albumList.size() == 0) {

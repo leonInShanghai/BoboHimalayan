@@ -29,6 +29,11 @@ public abstract class UILoader extends FrameLayout {
     private View mNetworkErrorView;
     private View mEmptyView;
 
+    /**
+     * 加载失败后用户点击 重新加载的接口
+     */
+    private OnRetryClickListener mOnRetryClickListener = null;
+
     public UILoader(@NonNull Context context) {
         this(context,null);
     }
@@ -105,7 +110,22 @@ public abstract class UILoader extends FrameLayout {
     }
 
     private View getNetworkErrorView() {
-        return LayoutInflater.from(getContext()).inflate(R.layout.fragment_error_view,this,false);
+        //mNetworkErrorView
+        View networkErrorView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_error_view,
+                this,false);
+
+        //网络加载错误 用户可以再点击一次刷新
+        networkErrorView.findViewById(R.id.network_error_icon).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //重新获取数据
+                if (mOnRetryClickListener != null) {
+                    mOnRetryClickListener.onRetryClick();
+                }
+            }
+        });
+
+        return networkErrorView;
     }
 
     //加载成功创建为抽象方法由子类实现
@@ -113,6 +133,22 @@ public abstract class UILoader extends FrameLayout {
 
 
     private View getLoadingView() {
-        return LayoutInflater.from(getContext()).inflate(R.layout.fragment_loading_view,this,false);
+        return LayoutInflater.from(getContext()).inflate(R.layout.fragment_loading_view,this,
+                false);
+    }
+
+    /**
+     * 供外界调用前设置的方法
+     * @param listener
+     */
+    public void setOnRetryClickListener(OnRetryClickListener listener){
+        this.mOnRetryClickListener = listener;
+    }
+
+    /**
+     * 加载失败用户点击了重试 接口回调
+     */
+    public interface OnRetryClickListener{
+        void onRetryClick();
     }
 }
