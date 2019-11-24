@@ -2,6 +2,7 @@ package com.bobo.himalayan.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,11 @@ import java.util.List;
  */
 public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdapter.InnerHolder> {
 
+    private static final String TAG = "RecommendListAdapter";
     private List<Album> mData = new ArrayList<>();
+
+    //供外界调用的recycleview被点击的接口
+    private OnRecommendItemListener mItemListener;
 
     @NonNull
     @Override
@@ -35,11 +40,25 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InnerHolder holder, final int position) {
         //绑定数据
         holder.itemView.setTag(position);
-        holder.setData(mData.get(position));
 
+        //item被点击的点击事件监听
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Log.e(TAG,"holder.itemView clik -->"+position); 用v.getTag() 也可以获取到 position
+
+                if (mItemListener != null){
+                    //根据对应位置拿到数据
+                    int clickPosition = (Integer) v.getTag();
+                    mItemListener.onItemClick(clickPosition,mData.get(clickPosition));
+                }
+                Log.e(TAG,"holder.itemView clik -->"+v.getTag());
+            }
+        });
+        holder.setData(mData.get(position));
     }
 
     @Override
@@ -90,6 +109,21 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
             Picasso.with(itemView.getContext()).load(album.getCoverUrlLarge()).placeholder(R.mipmap.logo)
                     .into(albumCoverIv);
         }
+    }
+
+    /**
+     * 设置recycleview item点击事件的监听
+     * @param listner
+     */
+    public void setOnRecommendItemListener(OnRecommendItemListener listner) {
+        this.mItemListener = listner;
+    }
+
+    /**
+     * 供外界调用的 recycleview item被点击的接口
+     */
+    public interface OnRecommendItemListener{
+        void onItemClick(int clickPosition, Album album);
     }
 }
 

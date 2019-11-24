@@ -1,6 +1,7 @@
 package com.bobo.himalayan.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,10 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bobo.himalayan.DetailActivity;
 import com.bobo.himalayan.R;
 import com.bobo.himalayan.adapters.RecommendListAdapter;
 import com.bobo.himalayan.base.BaseFragment;
 import com.bobo.himalayan.interfaces.IRcommendViewCallback;
+import com.bobo.himalayan.presenters.AlbumDetailPresenter;
 import com.bobo.himalayan.presenters.RecommendPresenter;
 import com.bobo.himalayan.utils.Constants;
 import com.bobo.himalayan.utils.LogUtil;
@@ -38,7 +41,7 @@ import java.util.Map;
  * Functions: 推荐页面的fragment
  */
 public class RecommendFragmnet extends BaseFragment implements IRcommendViewCallback,UILoader.
-        OnRetryClickListener {
+        OnRetryClickListener,RecommendListAdapter.OnRecommendItemListener {
 
     private  View mRootView;
 
@@ -82,7 +85,7 @@ public class RecommendFragmnet extends BaseFragment implements IRcommendViewCall
     }
 
     /**
-     *
+     * 创建网路请求成功展示数据的界面
      * @return
      */
     private View createSuccessView(LayoutInflater layoutInflater,ViewGroup container) {
@@ -111,6 +114,7 @@ public class RecommendFragmnet extends BaseFragment implements IRcommendViewCall
         //RecyclerView 的使用③设置适配器
         mRecommendListAdapter = new RecommendListAdapter();
         mRecyclerView.setAdapter(mRecommendListAdapter);
+        mRecommendListAdapter.setOnRecommendItemListener(this);
 
         return mRootView;
     }
@@ -158,5 +162,13 @@ public class RecommendFragmnet extends BaseFragment implements IRcommendViewCall
         if (mRecommendPresenter != null){
             mRecommendPresenter.getRecommendList();
         }
+    }
+
+    @Override
+    public void onItemClick(int position,Album album) {
+        AlbumDetailPresenter.getsInstance().setTargetAlbum(album);
+        //recycleview 中的 某个item被点击了,跳转到对应的详情页
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        startActivity(intent);
     }
 }

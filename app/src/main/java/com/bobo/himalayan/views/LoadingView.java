@@ -47,7 +47,8 @@ public class LoadingView extends ImageView{
             @Override
             public void run() {
                 //rotateDegree += 30; rotateDegree = rotateDegree <= 360 ? rotateDegree : 0;
-                rotateDegree = rotateDegree <= 360 ? rotateDegree + 30 : 0;
+                //rotateDegree = rotateDegree <= 360 ? rotateDegree + 30 : 0;
+                rotateDegree += 30;
 
                 /**
                  * 使整个视图无效。如果视图是可见的，那么

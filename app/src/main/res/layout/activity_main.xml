@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <!--↑注意这里使用 RelativeLayout 时 ViewPager 盖在MagicIndicator 上会监听不到点击事件-->
+    <!--↑注意这里使用 RelativeLayout 时 ViewPager 盖在MagicIndicator 上会监听不到点击事件 后来改了线性布局
+    解决了  用RelativeLayout后来者居上 不要把后来在设置为match_parent 盖住前面的也能解决-->
 
 
     <LinearLayout

@@ -16,12 +16,12 @@ public interface IRecommendPresenter {
     /**
      * 下拉加载更多的内容
      */
-    //void pull2Refresh();
+    void pull2Refresh();
 
     /**
      * 上拉加载更多
      */
-    //void loadMore();
+    void loadMore();
 
     /**
      * 用于注册UI的回调
