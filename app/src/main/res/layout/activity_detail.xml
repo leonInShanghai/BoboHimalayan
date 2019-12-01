@@ -114,12 +114,10 @@
 
     </LinearLayout>
 
-    <!--android:overScrollMode="never" 去掉划不动的时候的贝塞尔曲线-->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/album_detail_list"
-        android:layout_below="@+id/player_control_container"
+    <FrameLayout
+        android:id="@+id/detail_list_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"/>
+        android:layout_below="@+id/player_control_container" />
 
 </RelativeLayout>

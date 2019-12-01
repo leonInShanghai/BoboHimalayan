@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by 求知自学网 on 2019/11/23. Copyright © Leon. All rights reserved.
+ * Created by 公众号IT波 on 2019/11/23. Copyright © Leon. All rights reserved.
  * Functions:
  */
 public class AlbumDetailPresenter implements IAlbumDetailPresenter {
@@ -65,8 +65,17 @@ public class AlbumDetailPresenter implements IAlbumDetailPresenter {
 
     }
 
+    /**
+     * 获取详情页每集的 RecycleView的展示内容
+     * @param albumId
+     * @param page
+     */
     @Override
     public void getAlbumDetail(int albumId, int page) {
+
+        ////FIXME:修正 开始网络请求显示loading
+        updateLoading();
+
         //根据页码和专辑的id获取列表数据
         Map<String,String> map = new HashMap<>();
         map.put(DTransferConstants.ALBUM_ID,albumId+"");
@@ -88,8 +97,20 @@ public class AlbumDetailPresenter implements IAlbumDetailPresenter {
             public void onError(int errorCode, String errorMessage) {
                 Log.e(TAG,"errorCode-->"+errorCode);
                 Log.e(TAG,"errorMessage-->"+errorMessage);
+                handlerError(errorCode,errorMessage);
             }
         });
+    }
+
+    /**
+     * 如果是发生错误那么就可以通知UI， 网络请求失败回调
+     * @param errorCode
+     * @param errorMessage
+     */
+    private void handlerError(int errorCode, String errorMessage) {
+        for (IAlbumDetailViewCallback mCallback : mCallbacks) {
+            mCallback.onNetWorkError(errorCode,errorMessage);
+        }
     }
 
     /**
@@ -112,6 +133,13 @@ public class AlbumDetailPresenter implements IAlbumDetailPresenter {
         }
     }
 
+    //FIXME:修正
+    private void updateLoading(){
+        for (IAlbumDetailViewCallback mCallback : mCallbacks) {
+            mCallback.secondaryRefresh();
+        }
+    }
+
     @Override
     public void unregisterViewCallback(IAlbumDetailViewCallback detailViewCallback) {
         if (mCallbacks != null){
@@ -119,6 +147,10 @@ public class AlbumDetailPresenter implements IAlbumDetailPresenter {
         }
     }
 
+    /**
+     * 上一页面请求号的值 跳转到详情页直接展示
+     * @param targetAlbum 在订阅fragment跳转到DetailActivity 时传递过来的
+     */
     public void setTargetAlbum(Album targetAlbum){
         this.mTargetAlbum = targetAlbum;
     }

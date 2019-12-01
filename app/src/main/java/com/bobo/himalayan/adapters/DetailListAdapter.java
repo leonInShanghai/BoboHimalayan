@@ -15,8 +15,9 @@ import java.util.List;
 import com.bobo.himalayan.R;
 
 /**
- * Created by 求知自学网 on 2019/11/24. Copyright © Leon. All rights reserved.
- * Functions:
+ * Created by 公众号IT波 on 2019/11/24. Copyright © Leon. All rights reserved.
+ * Functions: 点击推荐条目进入详情页 recycleview的适配器
+ *    https://www.bilibili.com/video/av69452769?p=28
  */
 public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.InnerHolder> {
 
@@ -28,6 +29,9 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
 
     //将秒转换为 分秒
     private SimpleDateFormat mDurationFormat = new SimpleDateFormat( "mm:ss");
+
+    //供外界调用的点击事件接口
+    private ItemClickListener mItemClickListener = null;
 
     @NonNull
     @Override
@@ -67,13 +71,24 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
         ordetTv.setText(track.getOrderNum()+"");
         titleTv.setText(track.getTrackTitle());
         playCountTv.setText(track.getPlayCount()+"");
-        //先转换时间格式 （（秒 * 1000） 转换格式） 再设置显示 text
+        //先转换时间格式 （（秒 * 1000） 转换格式）再设置显示 text
         int durationMil = track.getDuration() * 1000;
         String duration = mDurationFormat.format(durationMil);
         durationTv.setText(duration);
         //先转换时间格式再设置显示 text
         String updateTimeText = mUpdateDateFormat.format(track.getUpdatedAt());
         updateDateTv.setText(updateTimeText);
+
+        //设置item的点击事件监听
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击事件通过接口传递到外界
+                if (mItemClickListener != null) {
+                    mItemClickListener.onItemClick();
+                }
+            }
+        });
     }
 
     @Override
@@ -96,5 +111,19 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
         public InnerHolder(@NonNull View itemView) {
             super(itemView);
         }
+    }
+
+    /**
+     * RecycleView 传递点击事件的接口 供外界调用的set方法
+     */
+    public void setItemClickListener(ItemClickListener listener){
+        mItemClickListener = listener;
+    }
+
+    /**
+     * RecycleView 传递点击事件的接口
+     */
+    public interface ItemClickListener{
+        void onItemClick();
     }
 }

@@ -12,7 +12,7 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.widget.ImageView;
 
 /**
- * Created by 求知自学网 on 2019/11/23. Copyright © Leon. All rights reserved.
+ * Created by 公众号IT波 on 2019/11/23. Copyright © Leon. All rights reserved.
  * Functions: 做毛玻璃效果工具类
  */
 public class ImageBlur {
