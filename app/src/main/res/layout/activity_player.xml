@@ -89,6 +89,7 @@
                 android:layout_weight="1"/>
 
             <ImageView
+                android:id="@+id/paly_or_pause_btn"
                 android:layout_width="0dp"
                 android:src="@mipmap/play_normal"
                 android:layout_height="35dp"

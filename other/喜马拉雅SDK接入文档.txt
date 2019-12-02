@@ -1,5 +1,5 @@
 
-喜马拉雅Android SDK接入文档
+喜马拉雅Android SDK接入文档 这个文档是 2019年11月从喜马拉雅下载的 和项目中集成的不是同一时期 有差别！
 
 如果贵方的targetSdkVersion >= 26 强烈建议使用XmPlayerManager.init(int id, Notification notification) 进行初始化,如果使用init()方法,建议在init()之后设置PlayerManager.setNotificationForNoCrash(int id ,Notification notification),否则在后台通过startForegroundService启动services的时候,如果在3.5秒之后发现没有设置notification和noCrashNotification ,我会设置一个内容为"正在后台收听"的通知栏
 

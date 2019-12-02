@@ -44,7 +44,7 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DetailListAdapter.InnerHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DetailListAdapter.InnerHolder holder, final int position) {
 
         //实例化控件再设置数据
         View itemView = holder.itemView;
@@ -85,7 +85,8 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
             public void onClick(View v) {
                 //点击事件通过接口传递到外界
                 if (mItemClickListener != null) {
-                    mItemClickListener.onItemClick();
+                    //参数需要有列表位置
+                    mItemClickListener.onItemClick(mDetailData,position);
                 }
             }
         });
@@ -124,6 +125,12 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
      * RecycleView 传递点击事件的接口
      */
     public interface ItemClickListener{
-        void onItemClick();
+
+        /**
+         * 用户点击 RecycleView的其中一个 item 进入播放页面
+         * @param detailData
+         * @param position
+         */
+        void onItemClick(List<Track> detailData, int position);
     }
 }

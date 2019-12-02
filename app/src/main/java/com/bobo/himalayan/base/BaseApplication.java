@@ -1,13 +1,14 @@
 package com.bobo.himalayan.base;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 
 import com.bobo.himalayan.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
-
+import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
 
 
 /**
@@ -18,6 +19,9 @@ public class BaseApplication extends Application {
 
      /**全局的Handler*/
      private static Handler sHandler = null;
+
+     /**全局上下文*/
+     private static Context sContext = null;
 
 
     @Override
@@ -40,11 +44,24 @@ public class BaseApplication extends Application {
             Log.e("BaseApplication","isDebug");
         }
 
+             //初始化喜马拉雅的播放器
+             XmPlayerManager.getInstance(this).init();
+
             //初始化自定义log  LogUtil
             LogUtil.init(this.getPackageName(),false);
 
+            //实例化全局的 handler
             sHandler = new Handler();
-        }
+
+            sContext = getBaseContext();
+    }
+
+    /**
+     * 获取全局上下文的方法
+     */
+    public static Context getContext(){
+        return sContext;
+    }
 
     /**
      * 获取静态全局handler的方法

@@ -22,6 +22,7 @@ import com.bobo.himalayan.adapters.DetailListAdapter;
 import com.bobo.himalayan.base.BaseActivity;
 import com.bobo.himalayan.interfaces.IAlbumDetailViewCallback;
 import com.bobo.himalayan.presenters.AlbumDetailPresenter;
+import com.bobo.himalayan.presenters.PlayerPresenter;
 import com.bobo.himalayan.utils.ImageBlur;
 import com.bobo.himalayan.views.RoundRectImageView;
 import com.bobo.himalayan.views.UILoader;
@@ -252,8 +253,11 @@ public class DetailActivity extends BaseActivity implements IAlbumDetailViewCall
      * RecycleView of item click 事件的处理
      */
     @Override
-    public void onItemClick() {
-        //TODO:跳转到播放器页面
+    public void onItemClick(List<Track> detailData, int position) {
+        //设置播放器的数据
+        PlayerPresenter playerPresenter = PlayerPresenter.getPlayerPresenter();
+        playerPresenter.setPlayList(detailData,position);
+        //跳转到播放器页面
         Intent intent = new Intent(this,PlayerActivity.class);
         startActivity(intent);
     }
