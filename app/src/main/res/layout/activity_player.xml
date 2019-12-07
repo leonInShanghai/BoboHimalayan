@@ -56,7 +56,7 @@
                 android:max="100"/>
 
             <TextView
-                android:id="@+id/track_duraction"
+                android:id="@+id/track_duration"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

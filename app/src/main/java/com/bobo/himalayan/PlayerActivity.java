@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bobo.himalayan.base.BaseActivity;
 import com.bobo.himalayan.interfaces.IPlayerCallback;
@@ -11,6 +12,7 @@ import com.bobo.himalayan.presenters.PlayerPresenter;
 import com.ximalaya.ting.android.opensdk.model.track.Track;
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -21,6 +23,17 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback {
 
     private ImageView mControlBtn;
     private PlayerPresenter mPlayerPresenter;
+
+    //分秒格式（用作总时长和当前播放进度）
+    private SimpleDateFormat mMinFormat = new SimpleDateFormat("mm:ss");
+
+    //时分秒格式（用作总时长和当前播放进度）hh : 代表时(区分大小写,大写为24进制计时,小写为12进制计时)
+    private SimpleDateFormat mHourFormat = new SimpleDateFormat("HH：mm:ss");
+
+    //显示总时间
+    private TextView mTotalDuration;
+    //当前播放时间
+    private TextView mCurrentPosition;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +67,8 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback {
      */
     private void initView(){
         mControlBtn = findViewById(R.id.paly_or_pause_btn);
-
+        mTotalDuration = findViewById(R.id.track_duration);
+        mCurrentPosition = findViewById(R.id.current_position);
     }
 
     /**
@@ -132,12 +146,31 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback {
     }
 
     @Override
-    public void onPlayModeChage(XmPlayListControl.PlayMode playMode) {
+    public void onPlayModeChange(XmPlayListControl.PlayMode playMode) {
 
     }
 
     @Override
     public void onProgressChange(long currentProgress, long total) {
+        //更新播放进度-更新进度条
+
+        String totalDuration;//总时间
+        String currentPosition;//当前时间
+
+        if (total > 1000 * 60 * 60){//大于一小时
+            totalDuration = mHourFormat.format(total);
+            currentPosition = mHourFormat.format(currentProgress);
+        }else{
+            totalDuration = mMinFormat.format(total);
+            currentPosition = mMinFormat.format(currentProgress);
+        }
+
+        //设置总时长
+        mTotalDuration.setText(totalDuration);
+
+        //更新当前时间
+        mCurrentPosition.setText(currentPosition);
+        //更新进度
 
     }
 

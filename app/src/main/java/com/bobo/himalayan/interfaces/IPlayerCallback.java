@@ -50,7 +50,7 @@ public interface IPlayerCallback {
     /**
      * 播放器模式改变了
      */
-    void onPlayModeChage(XmPlayListControl.PlayMode playMode);
+    void onPlayModeChange(XmPlayListControl.PlayMode playMode);
 
     /**
      * 进度条的改变
