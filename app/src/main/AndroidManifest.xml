@@ -34,8 +34,15 @@
         <activity android:name=".DetailActivity"></activity>
         <activity android:name=".PlayerActivity"></activity>
 
+        <!--原来-->
         <service android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService"
-            android:process=":player" />
+        android:process=":player"/>
+
+        //去掉后定位就是独立的进程。 service时把 android:process=":remote" 去掉
+        //android:process=":player"
+        <!--<service android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService" />-->
+
+
 
     </application>
 

@@ -18,7 +18,7 @@
         android:text="这是标题内容"/>
 
     <android.support.v4.view.ViewPager
-        android:background="#ff00ff"
+        android:id="@+id/track_pager_view"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="100dp"
         android:layout_below="@+id/track_title"
@@ -45,6 +45,8 @@
                 android:text="00:00"
                 android:textSize="16sp"/>
 
+            <!--进度条的最大值 android:max="100" 相当于考试满分100
+            这里再Java代码中动态设置了-->
             <SeekBar
                 android:id="@+id/track_seek_bar"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
@@ -52,8 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:max="100"/>
+                android:layout_marginRight="50dp" />
 
             <TextView
                 android:id="@+id/track_duration"
@@ -83,21 +84,23 @@
                 android:layout_weight="1"/>
 
             <ImageView
+                android:id="@+id/play_pre"
                 android:layout_width="0dp"
-                android:src="@mipmap/previous_normal"
+                android:src="@drawable/selector_palyer_pre"
                 android:layout_height="20dp"
                 android:layout_weight="1"/>
 
             <ImageView
                 android:id="@+id/paly_or_pause_btn"
                 android:layout_width="0dp"
-                android:src="@mipmap/play_normal"
+                android:src="@drawable/selector_palyer_play"
                 android:layout_height="35dp"
                 android:layout_weight="1"/>
 
             <ImageView
+                android:id="@+id/play_next"
                 android:layout_width="0dp"
-                android:src="@mipmap/next_normal"
+                android:src="@drawable/selector_palyer_next"
                 android:layout_height="20dp"
                 android:layout_weight="1"/>
 

@@ -57,7 +57,7 @@ public interface IPlayerCallback {
      * @param currentProgress 当前的进度
      * @param total 总的进度
      */
-    void onProgressChange(long currentProgress,long total);
+    void onProgressChange(int currentProgress,int total);
 
     /**
      * 广告正在加载
@@ -68,4 +68,10 @@ public interface IPlayerCallback {
      * 广告结束
      */
     void onAdLoaded();
+
+    /**
+     * 更新当前节目的标题
+     * @param track 每集节目的bean对象
+     */
+    void onTrackUpdated(Track track,int playIndex);
 }
