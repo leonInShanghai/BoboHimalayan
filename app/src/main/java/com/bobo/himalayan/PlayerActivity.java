@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,11 +16,19 @@ import com.bobo.himalayan.adapters.PlayerTrackPagerAdapter;
 import com.bobo.himalayan.base.BaseActivity;
 import com.bobo.himalayan.interfaces.IPlayerCallback;
 import com.bobo.himalayan.presenters.PlayerPresenter;
+import com.bobo.himalayan.views.SobPopWindow;
 import com.ximalaya.ting.android.opensdk.model.track.Track;
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl.PlayMode.PLAY_MODEL_LIST;
+import static com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl.PlayMode.PLAY_MODEL_LIST_LOOP;
+import static com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl.PlayMode.PLAY_MODEL_RANDOM;
+import static com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl.PlayMode.PLAY_MODEL_SINGLE_LOOP;
 
 /**
  * Created by 微信公众号IT波 on 2019/11/30. Copyright © Leon. All rights reserved.
@@ -41,6 +50,7 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback, Vie
 
     //显示总时间
     private TextView mTotalDuration;
+
     //当前播放时间
     private TextView mCurrentPosition;
 
@@ -66,6 +76,7 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback, Vie
 
     //中间显示每集封面图片的viewpager
     private ViewPager mTrackPageView;
+
     //中间显示每集封面图片的viewpager 的适配器
     private PlayerTrackPagerAdapter mTrackPagerAdapter;
 
@@ -75,16 +86,46 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback, Vie
     //FIXME:修正viewpager位置不对的bug
     private int mPageViewIndex = 0;
 
+    //左下角切换播放模式的按钮
+    private ImageView mPlayModeSwitchBtn;
+
+    //右下角点击显示播放列表的按钮
+    private ImageView mPalayListBtn;
+
+    //右下角点击显示播放列表的按钮被点击后显示的那个播放列表
+    private SobPopWindow mSobPopWindow;
+
+    //当前播放的模式 - 默认为列表播放
+    private XmPlayListControl.PlayMode mCurrentMode = XmPlayListControl.PlayMode.PLAY_MODEL_LIST;
+
+    //存放播放模型的键值对
+    private static Map<XmPlayListControl.PlayMode,XmPlayListControl.PlayMode> sPlayModeRule = new HashMap<>();
+
+    /**
+     * 处理播放模式的切换
+     * 1.默认是：PLAY_MODEL_LIST
+     * 2.列表循环播放：PLAY_MODEL_LIST_LOOP
+     * 3.随机播放：PLAY_MODEL_RANDOM
+     * 4.单曲循环：PLAY_MODEL_SINGLE_LOOP
+     */
+    static {
+        sPlayModeRule.put(PLAY_MODEL_LIST,PLAY_MODEL_LIST_LOOP);
+        sPlayModeRule.put(PLAY_MODEL_LIST_LOOP,PLAY_MODEL_RANDOM);
+        sPlayModeRule.put(PLAY_MODEL_RANDOM,PLAY_MODEL_SINGLE_LOOP);
+        sPlayModeRule.put(PLAY_MODEL_SINGLE_LOOP,PLAY_MODEL_LIST);
+    }
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
+        //初始化各个UI控件放在最前面减少空指针
+        initView();
+
         mPlayerPresenter = PlayerPresenter.getPlayerPresenter();
         mPlayerPresenter.registerViewCallback(this);
-
-        //初始化各个UI控件
-        initView();
 
         //获取详情列表 - 这个方法一定要放在 initView()后面
         mPlayerPresenter.getPlayList();
@@ -124,6 +165,12 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback, Vie
         mTrackPagerAdapter = new PlayerTrackPagerAdapter();
         //设置适配器
         mTrackPageView.setAdapter(mTrackPagerAdapter);
+        //切换播放模式的按钮
+        mPlayModeSwitchBtn = findViewById(R.id.player_mode_swith_btn);
+        //右下角点击显示播放列表的按钮
+        mPalayListBtn = findViewById(R.id.player_list);
+        //右下角点击显示播放列表的按钮被点击后显示的那个播放列表
+        mSobPopWindow = new SobPopWindow();
     }
 
     /**
@@ -202,6 +249,55 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback, Vie
                 return false;
             }
         });
+
+        //切换播放模式的按钮-点击事件的处理
+        mPlayModeSwitchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //播放模式的切换: 根据当前的播放model 获取并 切换到下一个播放 model
+                XmPlayListControl.PlayMode playMode = sPlayModeRule.get(mCurrentMode);
+
+                //修改播放模式
+                mPlayerPresenter.swithPlayMode(playMode);
+            }
+        });
+
+        //右下角点击显示播放列表的按钮-点击时间的监听处理
+        mPalayListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //展示播放列表（PopuWindoew）
+                mSobPopWindow.showAtLocation(v, Gravity.BOTTOM,0,0);
+            }
+        });
+    }
+
+    /**
+     * 更新播放模式的图片
+     */
+    private void  updatePlayModeBtnImg(){
+
+        int resId = R.drawable.selector_palyer_mode_list_order;
+
+        switch (mCurrentMode){
+            case PLAY_MODEL_LIST://列表模式
+                //下面这一句写不写都可以 默认就是这个值
+                //resId = R.drawable.selector_palyer_mode_list_order;
+                break;
+
+            case PLAY_MODEL_RANDOM://随机模式
+                resId = R.drawable.selector_palyer_mode_random;
+                break;
+
+            case PLAY_MODEL_LIST_LOOP://循环模式
+                resId = R.drawable.selector_palyer_mode_list_order_looper;
+                break;
+
+            case PLAY_MODEL_SINGLE_LOOP://单曲循环模式
+                resId = R.drawable.selector_palyer_mode_single_loop;
+               break;
+        }
+        mPlayModeSwitchBtn.setImageResource(resId);
     }
 
 //    /**
@@ -270,7 +366,10 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback, Vie
 
     @Override
     public void onPlayModeChange(XmPlayListControl.PlayMode playMode) {
-
+        //更新播放模式
+        mCurrentMode = playMode;
+        //修改ui
+        updatePlayModeBtnImg();
     }
 
     @Override

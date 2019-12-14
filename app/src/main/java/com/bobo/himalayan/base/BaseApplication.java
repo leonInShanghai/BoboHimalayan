@@ -58,7 +58,7 @@ public class BaseApplication extends Application {
     /**
      * 获取全局上下文的方法
      */
-    public static Context getContext(){
+    public static Context getAppContext(){
         return sContext;
     }
 

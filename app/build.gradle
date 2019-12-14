@@ -36,15 +36,15 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.squareup.picasso:picasso:2.3.2'
 
-    //    如果你的jar包/依赖代码 在编译的时候需要依赖，在运行的时候也需要，那么就用compile
-    //    如果你的jar包/依赖代码 仅在编译的时候需要，但是在运行时不需要依赖,就用provided
-    if(findProject(":Downloader")) {
-        api files('libs/xutil3.3.6.jar')
-        api project(':Downloader')
-        api project(':OAuth2_Android_SDK:XmPayOrderSDK')
-        api project(':TingPhoneOpenSDK')
-        api project(':OpenSDKAdModel')
-    } else{
-        api fileTree(dir: 'libs', include: '*.jar')
-    }
+//    //    如果你的jar包/依赖代码 在编译的时候需要依赖，在运行的时候也需要，那么就用compile
+//    //    如果你的jar包/依赖代码 仅在编译的时候需要，但是在运行时不需要依赖,就用provided
+//    if(findProject(":Downloader")) {
+//        api files('libs/xutil3.3.6.jar')
+//        api project(':Downloader')
+//        api project(':OAuth2_Android_SDK:XmPayOrderSDK')
+//        api project(':TingPhoneOpenSDK')
+//        api project(':OpenSDKAdModel')
+//    } else{
+//        api fileTree(dir: 'libs', include: '*.jar')
+//    }
 }

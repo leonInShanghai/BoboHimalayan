@@ -78,7 +78,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:src="@mipmap/sort_descending_normal"
+                android:id="@+id/player_mode_swith_btn"
+                android:src="@drawable/selector_palyer_mode_list_order"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"/>
@@ -105,8 +106,9 @@
                 android:layout_weight="1"/>
 
             <ImageView
+                android:id="@+id/player_list"
                 android:layout_width="0dp"
-                android:src="@mipmap/player_icon_list_normal"
+                android:src="@drawable/selector_palyer_list"
                 android:layout_height="20dp"
                 android:layout_weight="1"/>
 

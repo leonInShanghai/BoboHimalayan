@@ -1,5 +1,7 @@
 package com.bobo.himalayan.presenters;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.bobo.himalayan.base.BaseApplication;
@@ -20,12 +22,16 @@ import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl.PlayMode.PLAY_MODEL_LIST;
+import static com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl.PlayMode.PLAY_MODEL_LIST_LOOP;
+import static com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl.PlayMode.PLAY_MODEL_RANDOM;
+import static com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl.PlayMode.PLAY_MODEL_SINGLE_LOOP;
 
 
 /**
  * Created by 微信公众号IT波 on 2019/12/1. Copyright © Leon. All rights reserved.
  * Functions: 播放activity的 中介
- *  有时间做个彩虹加载进度条   代理 setProxyNew null
+ * 代理 setProxyNew null 喜马拉雅官方说这个可以忽略
  */
 public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, IXmPlayerStatusListener {
 
@@ -41,17 +47,37 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
 
     //用户选中第几集 从详情页跳转过来以及后来用户改变
     private int mCurrentIndex = 0;
-    //private List<Track> mPlayList;
+
+    //本地持久化保存数据
+    private final SharedPreferences mPlayModeSp;
+
+    //当前播放 模式
+    private XmPlayListControl.PlayMode mCurrentPlayMode = PLAY_MODEL_LIST;
+
+    //定义下面的常量是为了将枚举保存到本地
+    public static final int PLAY_MODEL_LIST_INT = 0;
+    public static final int PLAY_MODEL_LIST_LOOP_INT = 1;
+    public static final int PLAY_MODEL_RANDOM_INT = 2;
+    public static final int PLAY_MODEL_SINGLE_LOOP_INT = 3;
+
+    //SharedPreferences 的name
+    public static final String PLAY_MODE_SP_NAME = "PlayMode";
+    //SharedPreferences 存取播放模型的key
+    public static final String PLAY_MODE_KEY = "currentPlayMode";
 
     /**
      * 单例标配 私有的构造方法
      */
     private PlayerPresenter(){
-        mPlayerManager = XmPlayerManager.getInstance(BaseApplication.getContext());
+        mPlayerManager = XmPlayerManager.getInstance(BaseApplication.getAppContext());
         //广告相关的接口（注意广告有时候有有时候没有）
         mPlayerManager.addAdsStatusListener(this);
         //注册播放器相关的接口
         mPlayerManager.addPlayerStatusListener(this);
+
+        //需要本地持久化保存记录当前的播放模式
+        mPlayModeSp = BaseApplication.getAppContext().getSharedPreferences(PLAY_MODE_SP_NAME,
+                Context.MODE_PRIVATE);
     }
 
     /**
@@ -128,7 +154,59 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
 
     @Override
     public void swithPlayMode(XmPlayListControl.PlayMode mode) {
+        if (mPlayerManager != null) {
 
+            mCurrentPlayMode = mode;
+
+            mPlayerManager.setPlayMode(mode);
+
+            //通知ui更新播放模式
+            for (IPlayerCallback iPlayerCallback : mIPlayerCallbacks) {
+                iPlayerCallback.onPlayModeChange(mode);
+            }
+            //进入编辑模式
+            SharedPreferences.Editor edit = mPlayModeSp.edit();
+            edit.putInt(PLAY_MODE_KEY,getIntByPlayMode(mode));
+            edit.commit();//提交保存到本地
+        }
+    }
+
+    /**
+     * 根据播放模式（枚举）返回对应的 int值 做本地持久化保存 ：枚举转int
+     * @param mode
+     * @return
+     */
+    private int getIntByPlayMode(XmPlayListControl.PlayMode mode){
+        switch (mode){
+            case PLAY_MODEL_SINGLE_LOOP:
+                return PLAY_MODEL_SINGLE_LOOP_INT;
+            case PLAY_MODEL_LIST_LOOP:
+                return PLAY_MODEL_LIST_LOOP_INT;
+            case PLAY_MODEL_RANDOM:
+                return PLAY_MODEL_RANDOM_INT;
+            case PLAY_MODEL_LIST:
+                return PLAY_MODEL_LIST_INT;
+        }
+        return PLAY_MODEL_LIST_INT;
+    }
+
+    /**
+     * 根据 int值 返回 对应的 放模式（枚举） 即： int 转 枚举
+     * @param index
+     * @return
+     */
+    private XmPlayListControl.PlayMode getModeByInt(int index){
+        switch (index){
+            case PLAY_MODEL_SINGLE_LOOP_INT:
+                return PLAY_MODEL_SINGLE_LOOP;
+            case PLAY_MODEL_LIST_LOOP_INT:
+                return PLAY_MODEL_LIST_LOOP;
+            case PLAY_MODEL_RANDOM_INT:
+                return PLAY_MODEL_RANDOM;
+            case PLAY_MODEL_LIST_INT:
+                return PLAY_MODEL_LIST;
+        }
+        return PLAY_MODEL_LIST;
     }
 
     @Override
@@ -172,6 +250,14 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
     @Override
     public void registerViewCallback(IPlayerCallback iPlayerCallback) {
         iPlayerCallback.onTrackUpdated(mCurrentTrack,mCurrentIndex);
+
+        //从sp里头拿 上次保存的播放模式(int类型需要转换) 获取不到为0即默认为0
+        int modelIn = mPlayModeSp.getInt(PLAY_MODE_KEY, 0);
+        mCurrentPlayMode = getModeByInt(modelIn);//int 转 枚举
+
+        //进入页面就回调一次 设置ui层播放模式
+        iPlayerCallback.onPlayModeChange(mCurrentPlayMode);
+
         if (!mIPlayerCallbacks.contains(iPlayerCallback)) {
             mIPlayerCallbacks.add(iPlayerCallback);
         }
@@ -259,8 +345,12 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
     public void onSoundPrepared() {
         Log.e(TAG,"onSoundPrepared");
 
+        //设置播放模式为最新的播放模式
+        mPlayerManager.setPlayMode(mCurrentPlayMode);
+
         //判断 播放器准备好了 可以去播放了
         if (mPlayerManager.getPlayerStatus() == PlayerConstants.STATE_PREPARED){
+            //开始播放
             mPlayerManager.play();
         }
     }
@@ -328,10 +418,4 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
 }
 
 
-/**
- *每次加载10条数据
- *到达10条上啦，显示正在加载
- *湛江-小团团 14:17:30
- *湛江-小团团 14:17:34
- * 显示到底
- */
+
