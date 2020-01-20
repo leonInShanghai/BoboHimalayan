@@ -12,12 +12,12 @@ import com.ximalaya.ting.android.opensdk.model.track.Track;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.bobo.himalayan.R;
 
 /**
  * Created by 公众号IT波 on 2019/11/24. Copyright © Leon. All rights reserved.
  * Functions: 点击推荐条目进入详情页 recycleview的适配器
- *    https://www.bilibili.com/video/av69452769?p=28
  */
 public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.InnerHolder> {
 
@@ -25,10 +25,10 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
     private List<Track> mDetailData = new ArrayList<>();
 
     //格式化时间将 时间戳 转换为正常的时间
-    private SimpleDateFormat mUpdateDateFormat = new SimpleDateFormat( "yyyy-MM-dd");
+    private SimpleDateFormat mUpdateDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     //将秒转换为 分秒
-    private SimpleDateFormat mDurationFormat = new SimpleDateFormat( "mm:ss");
+    private SimpleDateFormat mDurationFormat = new SimpleDateFormat("mm:ss");
 
     //供外界调用的点击事件接口
     private ItemClickListener mItemClickListener = null;
@@ -50,7 +50,7 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
         View itemView = holder.itemView;
 
         //顺序id
-        TextView ordetTv = itemView.findViewById(R.id.order_text);
+        TextView orderTv = itemView.findViewById(R.id.order_text);
 
         //标题
         TextView titleTv = itemView.findViewById(R.id.detail_item_title);
@@ -68,9 +68,9 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
         Track track = mDetailData.get(position);
 
         //设置数据
-        ordetTv.setText(track.getOrderNum()+"");
+        orderTv.setText(track.getOrderNum() + 1 + "");
         titleTv.setText(track.getTrackTitle());
-        playCountTv.setText(track.getPlayCount()+"");
+        playCountTv.setText(track.getPlayCount() + "");
         //先转换时间格式 （（秒 * 1000） 转换格式）再设置显示 text
         int durationMil = track.getDuration() * 1000;
         String duration = mDurationFormat.format(durationMil);
@@ -86,7 +86,7 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
                 //点击事件通过接口传递到外界
                 if (mItemClickListener != null) {
                     //参数需要有列表位置
-                    mItemClickListener.onItemClick(mDetailData,position);
+                    mItemClickListener.onItemClick(mDetailData, position);
                 }
             }
         });
@@ -97,7 +97,9 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
         return mDetailData == null ? 0 : mDetailData.size();
     }
 
-    /**供外界调用的设置数据源的方法(不适合上来加载更多)*/
+    /**
+     * 供外界调用的设置数据源的方法(不适合上来加载更多)
+     */
     public void setData(List<Track> tracks) {
         //清除原来的数据
         mDetailData.clear();
@@ -117,17 +119,18 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
     /**
      * RecycleView 传递点击事件的接口 供外界调用的set方法
      */
-    public void setItemClickListener(ItemClickListener listener){
+    public void setItemClickListener(ItemClickListener listener) {
         mItemClickListener = listener;
     }
 
     /**
      * RecycleView 传递点击事件的接口
      */
-    public interface ItemClickListener{
+    public interface ItemClickListener {
 
         /**
          * 用户点击 RecycleView的其中一个 item 进入播放页面
+         *
          * @param detailData
          * @param position
          */

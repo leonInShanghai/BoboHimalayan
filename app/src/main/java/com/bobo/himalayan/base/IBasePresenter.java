@@ -8,12 +8,14 @@ public interface IBasePresenter<T> {
 
     /**
      * 注册UI的回调接口
+     *
      * @param
      */
     void registerViewCallback(T t);
 
     /**
      * （取消注册）删除UI通知接口
+     *
      * @param
      */
     void unRegisterViewCallback(T t);

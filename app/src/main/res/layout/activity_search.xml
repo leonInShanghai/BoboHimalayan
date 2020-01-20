@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff4f4f4"
+    android:orientation="vertical"
+    tools:context=".SearchActivity">
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:id="@+id/search_back"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/selector_back_btn" />
+
+        <!-- 输入框和删除输入框内容的按钮 -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1">
+
+            <!-- 调整光标的位置 android:paddingLeft="10dp"
+            自定义光标的颜色 android:textCursorDrawable-->
+            <EditText
+                android:id="@+id/search_input"
+                android:layout_width="match_parent"
+                android:textCursorDrawable="@drawable/shape_edit_text_cursor"
+                android:layout_height="match_parent"
+                android:hint="请输入专辑关键字"
+                android:textSize="16sp"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="40dp"
+                android:background="@drawable/shape_edit_text_bg" />
+
+            <ImageView
+                android:id="@+id/search_input_delete"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_width="20dp"
+                android:src="@mipmap/input_delete_icon"
+                android:layout_height="20dp" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/search_btn"
+            android:layout_width="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:textColor="@color/main_color" />
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/search_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+
+</LinearLayout>

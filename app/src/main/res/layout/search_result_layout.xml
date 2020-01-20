@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+        android:id="@+id/search_result_refresh_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <!-- 显示内容的循环视图 -->
+        <android.support.v7.widget.RecyclerView
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:id="@+id/result_list_view"
+            android:layout_height="match_parent" />
+
+    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+    <!-- 显示联想关键字的循环视图 -->
+    <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:id="@+id/search_recommend_list"
+        android:layout_height="match_parent" />
+
+    <com.bobo.himalayan.views.FlowTextLayout
+        android:id="@+id/recommend__hot_word_view"
+        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+</FrameLayout>

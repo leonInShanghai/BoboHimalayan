@@ -20,14 +20,15 @@ public class FragmentCreator {
 
     public final static int PAGE_COUNT = 3;
 
-    public static Map<Integer,BaseFragment> sCache = new HashMap<>();
+    public static Map<Integer, BaseFragment> sCache = new HashMap<>();
 
     /**
      * 根据索引获取 fragment
+     *
      * @param index
      * @return
      */
-    public static BaseFragment getFragment(int index){
+    public static BaseFragment getFragment(int index) {
 
         //优先从缓存中取
         BaseFragment baseFragment = sCache.get(index);
@@ -38,7 +39,7 @@ public class FragmentCreator {
         }
 
         //如果缓存中没有 则根据索引创建出对应的fragment
-        switch (index){
+        switch (index) {
             case INDEX_RECOMMEND:
                 baseFragment = new RecommendFragmnet();
                 break;
@@ -51,12 +52,11 @@ public class FragmentCreator {
         }
 
         //将创建的baseFragment添加到map中
-        sCache.put(index,baseFragment);
+        sCache.put(index, baseFragment);
 
         //返回新创建的baseFragment
         return baseFragment;
     }
-
 
 
 }

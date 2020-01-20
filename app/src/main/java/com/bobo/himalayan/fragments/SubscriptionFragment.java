@@ -1,10 +1,5 @@
 package com.bobo.himalayan.fragments;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +15,7 @@ public class SubscriptionFragment extends BaseFragment {
 
     @Override
     public View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
-        View rootView = layoutInflater.inflate(R.layout.fragment_subscription,  container,false);
+        View rootView = layoutInflater.inflate(R.layout.fragment_subscription, container, false);
         return rootView;
     }
 }

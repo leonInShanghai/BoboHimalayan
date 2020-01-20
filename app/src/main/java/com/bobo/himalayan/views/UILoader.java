@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
 import com.bobo.himalayan.R;
 import com.bobo.himalayan.base.BaseApplication;
 
@@ -18,8 +19,8 @@ import com.bobo.himalayan.base.BaseApplication;
 public abstract class UILoader extends FrameLayout {
 
     //把加载过程中的几种状态定义成枚举类
-    public enum UIStatus{
-        LOADING,SUCCESS,NEWWORK_ERROR,EMPTY,NONE
+    public enum UIStatus {
+        LOADING, SUCCESS, NEWWORK_ERROR, EMPTY, NONE
     }
 
     public UIStatus mCurrentStatus = UIStatus.NONE;
@@ -35,11 +36,11 @@ public abstract class UILoader extends FrameLayout {
     private OnRetryClickListener mOnRetryClickListener = null;
 
     public UILoader(@NonNull Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public UILoader(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public UILoader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -52,7 +53,7 @@ public abstract class UILoader extends FrameLayout {
      * 提供更新状态的方法
      * 传入自定义枚举类型
      */
-    public void updateStatus(UIStatus status){
+    public void updateStatus(UIStatus status) {
         mCurrentStatus = status;
 
         //更新ui（一定要在主线程）
@@ -67,11 +68,11 @@ public abstract class UILoader extends FrameLayout {
     /**
      * 初始化UI
      */
-    private void init(){
+    private void init() {
         switchUIByCurrentStatus();
     }
 
-    private void switchUIByCurrentStatus(){
+    private void switchUIByCurrentStatus() {
         //加载中
         if (mLoadingView == null) {
             mLoadingView = getLoadingView();
@@ -106,13 +107,13 @@ public abstract class UILoader extends FrameLayout {
     }
 
     private View getEmptyView() {
-        return LayoutInflater.from(getContext()).inflate(R.layout.fragment_empty_view,this,false);
+        return LayoutInflater.from(getContext()).inflate(R.layout.fragment_empty_view, this, false);
     }
 
     private View getNetworkErrorView() {
         //mNetworkErrorView
         View networkErrorView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_error_view,
-                this,false);
+                this, false);
 
         //网络加载错误 用户可以再点击一次刷新
         networkErrorView.findViewById(R.id.network_error_icon).setOnClickListener(new OnClickListener() {
@@ -133,22 +134,23 @@ public abstract class UILoader extends FrameLayout {
 
 
     private View getLoadingView() {
-        return LayoutInflater.from(getContext()).inflate(R.layout.fragment_loading_view,this,
+        return LayoutInflater.from(getContext()).inflate(R.layout.fragment_loading_view, this,
                 false);
     }
 
     /**
      * 供外界调用前设置的方法
+     *
      * @param listener
      */
-    public void setOnRetryClickListener(OnRetryClickListener listener){
+    public void setOnRetryClickListener(OnRetryClickListener listener) {
         this.mOnRetryClickListener = listener;
     }
 
     /**
      * 加载失败用户点击了重试 接口回调
      */
-    public interface OnRetryClickListener{
+    public interface OnRetryClickListener {
         void onRetryClick();
     }
 }

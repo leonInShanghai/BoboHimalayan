@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,6 +22,7 @@
             android:layout_height="match_parent" />
 
         <RelativeLayout
+            android:id="@+id/search_btn"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent">
@@ -40,7 +40,65 @@
     <android.support.v4.view.ViewPager
         android:overScrollMode="never"
         android:id="@+id/content_pager"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="60dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
-</LinearLayout>
+    <!--以下：播放控制相关-->
+    <LinearLayout
+        android:id="@+id/main_play_control_item"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#dfdfdf"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.bobo.himalayan.views.RoundRectImageView
+            android:layout_width="40dp"
+            android:id="@+id/main_track_cover"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/logo"
+            android:layout_height="40dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <!--跑马灯效果第二中实现方式-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#666666"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:id="@+id/mian_head_title"
+                android:textSize="18sp"
+                android:text="@string/listener_as_you_like_text" />
+
+            <TextView
+                android:id="@+id/main_sub_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#7f7f7f"
+                android:textSize="14sp"
+                android:text="@string/app_name" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:id="@+id/main_play_control"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/selector_palyer_play"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

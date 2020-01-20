@@ -13,6 +13,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+
             //传说中的混淆文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -23,28 +24,26 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.+'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // 千变万化的适配
     implementation project(':magicindicator')
+
+    // 第三方下拉刷新上拉加载更多
+    implementation project(':library')
+
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.squareup.picasso:picasso:2.3.2'
 
-//    //    如果你的jar包/依赖代码 在编译的时候需要依赖，在运行的时候也需要，那么就用compile
-//    //    如果你的jar包/依赖代码 仅在编译的时候需要，但是在运行时不需要依赖,就用provided
-//    if(findProject(":Downloader")) {
-//        api files('libs/xutil3.3.6.jar')
-//        api project(':Downloader')
-//        api project(':OAuth2_Android_SDK:XmPayOrderSDK')
-//        api project(':TingPhoneOpenSDK')
-//        api project(':OpenSDKAdModel')
-//    } else{
-//        api fileTree(dir: 'libs', include: '*.jar')
-//    }
+    //导入下拉刷新上拉加载更多的依赖  我引入的model
+    //implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
 }

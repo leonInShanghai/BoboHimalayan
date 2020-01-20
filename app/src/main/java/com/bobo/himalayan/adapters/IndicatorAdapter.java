@@ -4,16 +4,13 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 
-import com.bobo.himalayan.MainActivity;
 import com.bobo.himalayan.R;
 
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
-import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 /**
  * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
@@ -76,13 +73,13 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
             @Override
             public void onClick(View v) {
                 //如果index不一样的话 切换viewpager的内容
-                if (mOnTapClickListener != null){
+                if (mOnTapClickListener != null) {
                     mOnTapClickListener.onTabClick(index);
                 }
             }
         });
 
-       return  colorTransitionPagerTitleView;
+        return colorTransitionPagerTitleView;
     }
 
     @Override
@@ -95,12 +92,12 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
 
 
     //供外界调用设置 点击事件监听
-    public void setOnIndicatorTapClickListener(OnIndicatorTapClickListener listener){
+    public void setOnIndicatorTapClickListener(OnIndicatorTapClickListener listener) {
         this.mOnTapClickListener = listener;
     }
 
     //colorTransitionPagerTitleView点击回调接口
-    public interface OnIndicatorTapClickListener{
+    public interface OnIndicatorTapClickListener {
         void onTabClick(int index
         );
     }

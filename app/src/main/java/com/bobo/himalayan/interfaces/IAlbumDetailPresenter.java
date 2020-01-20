@@ -20,16 +20,13 @@ public interface IAlbumDetailPresenter extends IBasePresenter<IAlbumDetailViewCa
 
     /**
      * 获取专辑详情
+     *
      * @param albumId
      * @param page
      */
-    void getAlbumDetail(int albumId,int page);
+    void getAlbumDetail(int albumId, int page);
 
 }
-
-
-
-
 
 
 //原来的方法已经被抽取到父类中了

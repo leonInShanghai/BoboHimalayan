@@ -12,7 +12,7 @@
         android:id="@+id/iv_large_cover"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY" />
 
     <RelativeLayout
         android:id="@+id/subscription_container"
@@ -41,22 +41,39 @@
         android:background="#ebe8e8"
         android:layout_height="40dp">
 
+        <!-- 加了 android:paddingL... 增加ImageView 的点击范围使用户好点-->
         <ImageView
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="5dp"
             android:id="@+id/detail_play_control"
-            android:layout_width="19dp"
-            android:layout_height="19dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="39dp"
+            android:layout_height="39dp"
             android:src="@drawable/selector_play_control_play"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
 
-        <TextView
+        <!-- 原来是TextView 2019：12：29修改成横向滚动的自定义TextView
+             新增：android:singleLine="true"
+             新增：android:focusable="true"
+             新增：android:focusableInTouchMode="true"
+             新增：android:marqueeRepeatLimit="marquee_forever"
+             新增：android:ellipsize="marquee"-->
+        <com.bobo.himalayan.views.HorizontalScrollTextView
+            android:id="@+id/play_control_text_tv"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/detail_play_control"
             android:layout_width="wrap_content"
+            android:layout_marginRight="100dp"
+            android:singleLine="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:ellipsize="marquee"
             android:textSize="14sp"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="2dp"
             android:layout_height="wrap_content"
-            android:text="继续播放"/>
+            android:text="@string/click_play_tipts_text" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -78,13 +95,13 @@
     </RelativeLayout>
 
     <com.bobo.himalayan.views.RoundRectImageView
-       android:layout_height="75dp"
-       android:layout_below="@+id/iv_large_cover"
-       android:id="@+id/viv_small_cover"
-       android:scaleType="fitXY"
-       android:layout_width="75dp"
-       android:layout_marginTop="-40dp"
-       android:layout_marginLeft="10dp" />
+        android:layout_height="75dp"
+        android:layout_below="@+id/iv_large_cover"
+        android:id="@+id/viv_small_cover"
+        android:scaleType="fitXY"
+        android:layout_width="75dp"
+        android:layout_marginTop="-40dp"
+        android:layout_marginLeft="10dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -110,7 +127,7 @@
             android:id="@+id/tv_album_author"
             android:textColor="@color/sub_text_title"
             android:textSize="12sp"
-            android:text="这是作者信息"/>
+            android:text="这是作者信息" />
 
     </LinearLayout>
 

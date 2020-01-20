@@ -3,12 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <!--android:overScrollMode="never" 去掉划不动的时候的贝塞尔曲线-->
-   <android.support.v7.widget.RecyclerView
-       android:id="@+id/recommend_list"
-       android:background="#f4f4f4"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:overScrollMode="never"/>
+
+    <!-- 这里外面包裹一层布局不是为了下拉刷新和上拉加载更多，只是为了增加一个回弹效果 -->
+    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+        android:id="@+id/over_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--android:overScrollMode="never" 去掉划不动的时候的贝塞尔曲线-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recommend_list"
+            android:background="#f4f4f4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+
+    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 
 </RelativeLayout>

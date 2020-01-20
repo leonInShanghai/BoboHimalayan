@@ -1,66 +1,54 @@
 package com.bobo.himalayan.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bobo.himalayan.DetailActivity;
 import com.bobo.himalayan.R;
-import com.bobo.himalayan.adapters.RecommendListAdapter;
+import com.bobo.himalayan.adapters.AlbumListAdapter;
 import com.bobo.himalayan.base.BaseFragment;
 import com.bobo.himalayan.interfaces.IRcommendViewCallback;
 import com.bobo.himalayan.presenters.AlbumDetailPresenter;
 import com.bobo.himalayan.presenters.RecommendPresenter;
-import com.bobo.himalayan.utils.Constants;
-import com.bobo.himalayan.utils.LogUtil;
 import com.bobo.himalayan.views.UILoader;
-import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
-import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
-import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
-import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
 
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
  * Functions: 推荐页面的fragment
  */
-public class RecommendFragmnet extends BaseFragment implements IRcommendViewCallback,UILoader.
-        OnRetryClickListener,RecommendListAdapter.OnRecommendItemListener {
+public class RecommendFragmnet extends BaseFragment implements IRcommendViewCallback, UILoader.
+        OnRetryClickListener, AlbumListAdapter.OnRecommendItemListener {
 
-    private  View mRootView;
+    private View mRootView;
 
     private RecyclerView mRecyclerView;
 
-    //适配器
-    private RecommendListAdapter mRecommendListAdapter;
+    // 适配器
+    private AlbumListAdapter mRecommendListAdapter;
 
     private RecommendPresenter mRecommendPresenter;
 
     private UILoader mUILoader;
 
     @Override
-    public View onSubViewLoaded(final LayoutInflater layoutInflater,ViewGroup container) {
+    public View onSubViewLoaded(final LayoutInflater layoutInflater, ViewGroup container) {
 
         mUILoader = new UILoader(getContext()) {
             @Override
             protected View getSuccessView(ViewGroup container1) {
-                return createSuccessView(layoutInflater,container1);
+                return createSuccessView(layoutInflater, container1);
             }
         };
 
@@ -86,14 +74,19 @@ public class RecommendFragmnet extends BaseFragment implements IRcommendViewCall
 
     /**
      * 创建网路请求成功展示数据的界面
+     *
      * @return
      */
-    private View createSuccessView(LayoutInflater layoutInflater,ViewGroup container) {
+    private View createSuccessView(LayoutInflater layoutInflater, ViewGroup container) {
         //view加载完成
-        mRootView = layoutInflater.inflate(R.layout.fragment_recommend, container,false);
+        mRootView = layoutInflater.inflate(R.layout.fragment_recommend, container, false);
 
         //RecyclerView 的使用①实例化控件
         mRecyclerView = mRootView.findViewById(R.id.recommend_list);
+
+        TwinklingRefreshLayout twinklingRefreshLayout = mRootView.findViewById(R.id.over_scroll_view);
+        // 设置上拉和下拉回弹效果
+        twinklingRefreshLayout.setPureScrollModeOn();
 
         //RecyclerView 的使用②设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -104,15 +97,15 @@ public class RecommendFragmnet extends BaseFragment implements IRcommendViewCall
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView
                     parent, @NonNull RecyclerView.State state) {
-                outRect.top = UIUtil.dip2px(view.getContext(),5);//像素转dp
-                outRect.bottom = UIUtil.dip2px(view.getContext(),5);//像素转dp
-                outRect.left = UIUtil.dip2px(view.getContext(),5);//像素转dp
-                outRect.right = UIUtil.dip2px(view.getContext(),5);//像素转dp
+                outRect.top = UIUtil.dip2px(view.getContext(), 5);//像素转dp
+                outRect.bottom = UIUtil.dip2px(view.getContext(), 5);//像素转dp
+                outRect.left = UIUtil.dip2px(view.getContext(), 5);//像素转dp
+                outRect.right = UIUtil.dip2px(view.getContext(), 5);//像素转dp
             }
         });
 
         //RecyclerView 的使用③设置适配器
-        mRecommendListAdapter = new RecommendListAdapter();
+        mRecommendListAdapter = new AlbumListAdapter();
         mRecyclerView.setAdapter(mRecommendListAdapter);
         mRecommendListAdapter.setOnRecommendItemListener(this);
 
@@ -130,8 +123,8 @@ public class RecommendFragmnet extends BaseFragment implements IRcommendViewCall
 
     @Override
     public void onNetworkError() {
-       //切换到加载失败页面
-       mUILoader.updateStatus(UILoader.UIStatus.NEWWORK_ERROR);
+        //切换到加载失败页面
+        mUILoader.updateStatus(UILoader.UIStatus.NEWWORK_ERROR);
     }
 
     @Override
@@ -159,13 +152,13 @@ public class RecommendFragmnet extends BaseFragment implements IRcommendViewCall
     @Override
     public void onRetryClick() {
         //加载失败用户点击了重新请求
-        if (mRecommendPresenter != null){
+        if (mRecommendPresenter != null) {
             mRecommendPresenter.getRecommendList();
         }
     }
 
     @Override
-    public void onItemClick(int position,Album album) {
+    public void onItemClick(int position, Album album) {
         AlbumDetailPresenter.getsInstance().setTargetAlbum(album);
         //recycleview 中的 某个item被点击了,跳转到对应的详情页
         Intent intent = new Intent(getContext(), DetailActivity.class);

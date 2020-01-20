@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:textColor="#979797"
-        android:text="0"/>
+        android:text="0" />
 
     <!--android:layout_width="wrap_content"-->
     <LinearLayout
@@ -35,7 +35,7 @@
             android:textColor="#000000"
             android:ellipsize="end"
             android:text="我是大标题我是大标题我是大标题我大标题"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:text="888.8万"
                 android:textColor="#979797"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/detail_item_duration"
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:text="05：23"
                 android:textColor="#979797"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -83,7 +83,7 @@
         android:textSize="12sp"
         android:layout_marginBottom="10dp"
         android:textColor="#979797"
-        android:text="2019-08"/>
+        android:text="2019-08" />
 
 
 </RelativeLayout>

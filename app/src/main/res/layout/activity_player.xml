@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,7 +14,7 @@
         android:layout_marginRight="20dp"
         android:gravity="center_horizontal"
         android:textSize="20sp"
-        android:text="这是标题内容"/>
+        android:text="这是标题内容" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/track_pager_view"
@@ -23,7 +22,7 @@
         android:layout_marginBottom="100dp"
         android:layout_below="@+id/track_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:layout_alignParentBottom="true"
@@ -43,7 +42,7 @@
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:text="00:00"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <!--进度条的最大值 android:max="100" 相当于考试满分100
             这里再Java代码中动态设置了-->
@@ -64,7 +63,7 @@
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:text="00:00"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
@@ -82,35 +81,35 @@
                 android:src="@drawable/selector_palyer_mode_list_order"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/play_pre"
                 android:layout_width="0dp"
                 android:src="@drawable/selector_palyer_pre"
                 android:layout_height="20dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/paly_or_pause_btn"
                 android:layout_width="0dp"
                 android:src="@drawable/selector_palyer_play"
                 android:layout_height="35dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/play_next"
                 android:layout_width="0dp"
                 android:src="@drawable/selector_palyer_next"
                 android:layout_height="20dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/player_list"
                 android:layout_width="0dp"
                 android:src="@drawable/selector_palyer_list"
                 android:layout_height="20dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
         </LinearLayout>
 

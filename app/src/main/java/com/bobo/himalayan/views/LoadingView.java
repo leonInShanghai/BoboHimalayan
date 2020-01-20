@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+
 import com.bobo.himalayan.R;
 
 /**
@@ -13,7 +14,7 @@ import com.bobo.himalayan.R;
  * Functions:
  */
 @SuppressLint("AppCompatCustomView")
-public class LoadingView extends ImageView{
+public class LoadingView extends ImageView {
 
     //旋转角度的变量
     private int rotateDegree = 0;
@@ -22,11 +23,11 @@ public class LoadingView extends ImageView{
     private boolean mNeedRotate = false;
 
     public LoadingView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public LoadingView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public LoadingView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -60,7 +61,7 @@ public class LoadingView extends ImageView{
 
                 //判断是否继续旋转
                 if (mNeedRotate) {
-                    postDelayed(this,100);
+                    postDelayed(this, 100);
                 }
             }
         });
@@ -78,7 +79,7 @@ public class LoadingView extends ImageView{
     protected void onDraw(Canvas canvas) {
 
         //在父类之前重绘 degrees:旋转角度, px,py 坐标
-        canvas.rotate(rotateDegree,getWidth() / 2,getHeight() / 2);
+        canvas.rotate(rotateDegree, getWidth() / 2, getHeight() / 2);
 
         super.onDraw(canvas);
     }

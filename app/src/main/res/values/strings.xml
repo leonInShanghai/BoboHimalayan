@@ -8,4 +8,15 @@
         <item>历史</item>
     </array>
 
+    <!--SobPopWindow 上用到的 播放模式文字 -->
+    <string name="play_mode_order_text">顺序播放</string>
+    <string name="play_mode_random_text">随机播放</string>
+    <string name="play_mode_list_play_text">列表循环</string>
+    <string name="play_mode_single_play_text">单曲循环</string>
+    <string name="order_text">顺序</string>
+    <string name="revers_text">逆序</string>
+
+    <string name="click_play_tipts_text">点击播放</string>
+    <string name="listener_as_you_like_text">随便听听</string>
+
 </resources>

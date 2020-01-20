@@ -43,6 +43,7 @@ public interface IPlayerCallback {
 
     /**
      * 播放列表数据加载完成
+     *
      * @param list 播放器列表数据
      */
     void onListLoaded(List<Track> list);
@@ -54,10 +55,11 @@ public interface IPlayerCallback {
 
     /**
      * 进度条的改变
+     *
      * @param currentProgress 当前的进度
-     * @param total 总的进度
+     * @param total           总的进度
      */
-    void onProgressChange(int currentProgress,int total);
+    void onProgressChange(int currentProgress, int total);
 
     /**
      * 广告正在加载
@@ -71,7 +73,15 @@ public interface IPlayerCallback {
 
     /**
      * 更新当前节目的标题
+     *
      * @param track 每集节目的bean对象
      */
-    void onTrackUpdated(Track track,int playIndex);
+    void onTrackUpdated(Track track, int playIndex);
+
+    /**
+     * 更新SobPopWindow弹窗 中列表的排序 通知UI更新图标
+     *
+     * @param isReverse 是否倒序
+     */
+    void updateListOrder(boolean isReverse);
 }

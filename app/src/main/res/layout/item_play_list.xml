@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="14dp"
+    android:paddingBottom="10dp">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/paly_icon_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/playlist_playing_icon" />
+
+        <TextView
+            android:maxLines="1"
+            android:id="@+id/track_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/play_list_text_color"
+            android:textSize="16sp"
+            android:text="我是标题" />
+
+    </LinearLayout>
+
+    <!--之前写了个 VideoView 完全用不到的呀 用VideoView做分割线的时候还遇到了内存泄漏-->
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/play_list_line_color"
+        android:layout_marginTop="16dp"
+        android:layout_height="1px" />
+
+</LinearLayout>

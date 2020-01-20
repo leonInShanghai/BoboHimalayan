@@ -10,4 +10,22 @@
 
     <!--首先作者名字 textview 用到了这个颜色-->
     <color name="sub_text_title">#979797</color>
+
+    <!-- 搜索联想词RecycleView分割线颜色 -->
+    <color name="sub_text_title_99">#99979797</color>
+
+    <!-- 搜索联想词RecycleView分割线颜色 新 -->
+    <color name="sub_text_title_df">#aaefefef</color>
+
+    <!--SobPopWindwow 上RecyclerView item中的分割线-->
+    <color name="play_list_line_color">#ECEEF0</color>
+
+
+    <color name="black">#000000</color>
+
+    <color name="second_color">#FA7254</color>
+
+    <!--SobPopWindwow 上RecyclerView item中用到的灰色-->
+    <color name="play_list_text_color">#7D828C</color>
+
 </resources>

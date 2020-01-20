@@ -6,16 +6,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <!--获取电话的状态,在打电话的时候暂停播放-->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 获取电话的状态,在打电话的时候暂停播放 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-    <!--target >=28 需要设置此权限 -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" /> <!-- target >=28 需要设置此权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-        android:name=".base.BaseApplication"
+        android:name="com.bobo.himalayan.base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -23,7 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name="com.bobo.himalayan.MainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -31,19 +31,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity"></activity>
-        <activity android:name=".PlayerActivity"></activity>
+        <activity
+            android:name="com.bobo.himalayan.DetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.bobo.himalayan.PlayerActivity"
+            android:screenOrientation="portrait" />
 
-        <!--原来-->
-        <service android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService"
-        android:process=":player"/>
-
-        //去掉后定位就是独立的进程。 service时把 android:process=":remote" 去掉
-        //android:process=":player"
-        <!--<service android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService" />-->
-
-
-
+        <!-- 搜索页面 -->
+        <activity
+            android:name="com.bobo.himalayan.SearchActivity"
+            android:screenOrientation="portrait" />
+        <service
+            android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService"
+            android:process=":player" />
     </application>
 
 </manifest>
