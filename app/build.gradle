@@ -46,4 +46,7 @@ dependencies {
 
     //导入下拉刷新上拉加载更多的依赖  我引入的model
     //implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
+
+    // RX java
+    implementation "io.reactivex.rxjava2:rxjava:2.2.10"
 }

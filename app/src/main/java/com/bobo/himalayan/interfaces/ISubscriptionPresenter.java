@@ -28,4 +28,10 @@ public interface ISubscriptionPresenter extends IBasePresenter<ISubscriptionCall
      * 获取订阅列表
      */
     void getSubcriptionList();
+
+    /**
+     * 判断当前专辑是否已经收藏/订阅
+     * @param album ：专辑对象
+     */
+    boolean isSub(Album album);
 }

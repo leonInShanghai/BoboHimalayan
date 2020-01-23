@@ -24,7 +24,7 @@ public class Constants {
     /**
      * 订阅（最先用到）数据库的名字"ximala.db"
      */
-    public static final String DB_NAME = "微信公众号IT波_ximala.db";
+    public static final String DB_NAME = "bobo_ximala.db";
 
     /**
      * 数据库的版本
@@ -59,21 +59,21 @@ public class Constants {
     /**
      * 订阅表中tracksCount
      */
-    public static final String SUB_TRACKSCOUNT = "tracksCount";
+    public static final String SUB_TRACKS_COUNT = "tracksCount";
 
     /**
      * 订阅表中playCount
      */
-    public static final String SUB_PLAYCOUNT = "playCount";
+    public static final String SUB_PLAY_COUNT = "playCount";
 
     /**
      * 订阅表中authorName
      */
-    public static final String SUB_AUTHORNAME = "authorName";
+    public static final String SUB_AUTHOR_NAME = "authorName";
 
     /**
      * 订阅表中albumId
      */
-    public static final String SUB_ALBUMID = "albumId";
+    public static final String SUB_ALBUM_ID = "albumId";
 
 }

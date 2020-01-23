@@ -9,6 +9,12 @@ import com.ximalaya.ting.android.opensdk.model.album.Album;
 public interface ISubDao {
 
     /**
+     * 接口回调
+     * @param callback
+     */
+    void setCallback(ISubDaoCallback callback);
+
+    /**
      * 添加专辑订阅
      *
      * @param album

@@ -22,12 +22,13 @@
         android:background="#ffffff">
 
         <TextView
+            android:id="@+id/detail_sub_btn"
             android:layout_centerInParent="true"
             android:layout_alignParentRight="true"
             android:textColor="@color/white"
             android:layout_marginRight="14dp"
             android:layout_width="75dp"
-            android:text="+ 订阅"
+            android:text="@string/sub_tip_text"
             android:gravity="center"
             android:background="@drawable/shape_subscription_bg"
             android:layout_height="30dp" />
