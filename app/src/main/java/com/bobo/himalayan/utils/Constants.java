@@ -34,7 +34,7 @@ public class Constants {
     /**
      * 订阅的表名
      */
-    public static final String SUB_TB_NAME = "subTb";
+    public static final String SUB_TB_NAME = "tb_subscription";
 
     /**
      * 订阅表中id
@@ -75,5 +75,69 @@ public class Constants {
      * 订阅表中albumId
      */
     public static final String SUB_ALBUM_ID = "albumId";
+
+    /**
+     * 订阅最多个数不能超过100条
+     */
+    public static final int MAX_SUB_COUNT = 100;
+
+    /**
+     * 历史记录的表名
+     */
+    public static final String HISTORY_TB_NAME = "tb_history";
+
+    /**
+     * 历史表中的id
+     * 原来：_id  编译报错
+     */
+    public static final String HISTORY_ID = "_id";
+
+    /**
+     * 历史表中章节（集）的id
+     */
+    public static final String HISTORY_TRACK_ID = "historyTrackId";
+
+    /**
+     * 历史表中的标题
+     */
+    public static final String HISTORY_TITLE = "historyTitle";
+
+    /**
+     * 历史表中的播放次数
+     */
+    public static final String HISTORY_PLAY_COUNT = "historyPlayCount";
+
+    /**
+     * 历史表中的播放时长
+     */
+    public static final String HISTORY_DURATION = "historyDuration";
+
+    /**
+     * 历史表中更新的时间
+     */
+    public static final String HISTORY_UPDATE_TIME = "historyUpdateTime";
+
+    /**
+     * 历史列表中章节（集）封面的URL
+     */
+    public static final String HISTORY_COVER = "historyCover";
+
+    /**
+     * 历史列表中 订单序号 （展示在item最左边序号）
+     */
+    public static final String HISTORY_ORDER_NUMBER = "history_order_nubber";
+
+
+    /**
+     * 历史列表中 作者
+     */
+    public static final String HISTORY_AUTHOR = "history_author";
+
+    /**
+     * 历史数据 最大保存到数据库的数量
+     */
+    public static final int MAX_HISTORY_COUNT = 100;
+
+
 
 }

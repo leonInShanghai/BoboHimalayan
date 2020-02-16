@@ -46,6 +46,28 @@ public class XimalayaDBHelper extends SQLiteOpenHelper {
 
         // 执行建表语句
         db.execSQL(subTbSql);
+
+        /**
+         * <column definition name> or <table constraint> expected, got
+         * 最后一个字段不要带 ，号
+         */
+        // 创建历史记录表
+        String historyTbSql = "create table " + Constants.HISTORY_TB_NAME + "(" + ""
+                + Constants.HISTORY_ID + " integer primary key autoincrement,"
+                + Constants.HISTORY_TRACK_ID + " integer,"
+                + Constants.HISTORY_TITLE + " varchar,"
+                + Constants.HISTORY_COVER+ " varchar,"
+                + Constants.HISTORY_PLAY_COUNT + " integer,"
+                + Constants.HISTORY_DURATION + " integer,"
+                + Constants.HISTORY_UPDATE_TIME + " integer,"
+                + Constants.HISTORY_AUTHOR + " varchar,"
+                + Constants.HISTORY_ORDER_NUMBER + " integer" +");";
+
+
+
+        // 执行建表语句
+        db.execSQL(historyTbSql);
+
     }
 
     @Override

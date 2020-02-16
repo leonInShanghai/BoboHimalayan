@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@android:color/white" />
+
+    <item >
+        <bitmap android:src="@mipmap/splash"
+            android:tileMode="disabled"
+            android:scaleType="centerCrop"
+            android:filter="true"/>
+    </item>
+
+    <!--<item android:bottom="40dp" android:top="40dp">-->
+        <!--<bitmap android:src="@mipmap/buttom"-->
+            <!--android:gravity="bottom"/>-->
+    <!--</item>-->
+
+
+</layer-list>

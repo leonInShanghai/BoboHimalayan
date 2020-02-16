@@ -140,7 +140,7 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback, Vie
         mPlayerPresenter.registerViewCallback(this);
 
         //获取详情列表 - 这个方法一定要放在 initView()后面
-        mPlayerPresenter.getPlayList();
+        // mPlayerPresenter.getPlayList();
 
         //实例化点击等事件的监听
         initEvent();
@@ -173,7 +173,7 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback, Vie
 
                 float value = (float) animation.getAnimatedValue();
 
-                //处理一下背景，有点透明度，俗称加个蒙版
+                // 处理一下背景，有点透明度，俗称加个蒙版
                 updateBgAlpha(value);
             }
         });
@@ -465,8 +465,8 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback, Vie
         //if (mTrackPagerAdapter != null) {
         //把数据设置到中间展示每一集封面的适配器中
         mTrackPagerAdapter.setData(list);
-        //FIXME:修正viewpager位置不对的bug
-        mTrackPageView.setCurrentItem(mPageViewIndex, true);
+        //FIXME:修正viewpager位置不对的bug 可以用用了其他方式解决
+        // mTrackPageView.setCurrentItem(mPageViewIndex, true);
         //}
 
         //数据请求回来也要给，右下角的播放类别弹窗一份
@@ -542,8 +542,8 @@ public class PlayerActivity extends BaseActivity implements IPlayerCallback, Vie
 
         mTrackTitleText = track.getTrackTitle();
 
-        //FIXME:修正viewpager位置不对的bug
-        mPageViewIndex = playIndex;
+        //FIXME:修正viewpager位置不对的bug  可以用用了其他方式解决
+        // mPageViewIndex = playIndex;
 
         if (mTrackTitleTv != null) {
             mTrackTitleTv.setText(mTrackTitleText == null ? "" : mTrackTitleText);

@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * Created by Leon on 2019/11/16. Copyright © Leon. All rights reserved.
- * Functions: 首页和搜索  recycleview的适配器  两个地方共用这一个适配器
+ * Functions: 首页、搜索、订阅  recycleview的适配器  三个地方共用这一个适配器
  */
 public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.InnerHolder> {
 
@@ -28,7 +28,9 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.Inne
     private List<Album> mData = new ArrayList<>();
 
     //供外界调用的recycleview被点击的接口
-    private OnRecommendItemListener mItemListener;
+    private OnAlbumItemListener mItemListener;
+
+    private OnAlbumItemLongClickListener mLongClickListener = null;
 
     @NonNull
     @Override
@@ -59,6 +61,21 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.Inne
             }
         });
         holder.setData(mData.get(position));
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                if (mLongClickListener != null) {
+                    // 根据对应位置拿到数据
+                    int clickPosition = (Integer) v.getTag();
+                    mLongClickListener.onItemLongClick(mData.get(clickPosition));
+                }
+
+                // true 表示消费掉了该事件
+                return true;
+            }
+        });
     }
 
     @Override
@@ -137,15 +154,35 @@ public class AlbumListAdapter extends RecyclerView.Adapter<AlbumListAdapter.Inne
      *
      * @param listner
      */
-    public void setOnRecommendItemListener(OnRecommendItemListener listner) {
+    public void setOnAlbumItemListener(OnAlbumItemListener listner) {
         this.mItemListener = listner;
     }
 
     /**
      * 供外界调用的 recycleview item被点击的接口
      */
-    public interface OnRecommendItemListener {
+    public interface OnAlbumItemListener {
         void onItemClick(int clickPosition, Album album);
+    }
+
+    /**
+     * 供外界设置item长按事件的监听
+     * @param listener
+     */
+    public void setOnAlbumItemLongClickListener(OnAlbumItemLongClickListener listener){
+        this.mLongClickListener = listener;
+    }
+
+    /**
+     * 供外界调用的长按事件监听接口
+     */
+    public interface OnAlbumItemLongClickListener {
+
+        /**
+         * 对应的item被长按了回调这个方法
+         * @param album item对应的对象
+         */
+        void onItemLongClick(Album album);
     }
 }
 

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_confirm_dialog_bg"
+        android:layout_height="180dp">
+
+        <TextView
+            android:layout_marginTop="40dp"
+            android:id="@+id/dialog_tips_text"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:text="删除当前历史记录吗?"
+            android:textSize="22sp"/>
+
+        <CheckBox
+            android:id="@+id/dialog_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dialog_tips_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            android:text="清除所有的数据"/>
+
+        <LinearLayout
+            android:id="@+id/dialog_button_container"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:id="@+id/dialog_check_box_confirm"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#c5c0c0"
+                android:layout_height="match_parent"
+                android:text="确认删除"
+                android:textSize="20sp"/>
+
+            <!-- 中间分隔线 -->
+            <View
+                android:layout_width="1dp"
+                android:background="#dfdfdf"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/dialog_check_box_cancle"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/main_color"
+                android:text="我再想想"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+        <!-- 分隔线相对布局后来者居上 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_above="@+id/dialog_button_container"
+            android:background="#dfdfdf"
+            android:layout_height="1dp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

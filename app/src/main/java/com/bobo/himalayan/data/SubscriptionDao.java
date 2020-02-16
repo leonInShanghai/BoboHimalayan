@@ -101,7 +101,7 @@ public class SubscriptionDao implements ISubDao {
             db.beginTransaction();
 
             // 删除数据 第一个参数是表名 第二个参数是删除语句
-            int delete = db.delete(Constants.SUB_TB_NAME,  Constants.SUB_ALBUM_ID + "?", new String[]
+            int delete = db.delete(Constants.SUB_TB_NAME,  Constants.SUB_ALBUM_ID + "=?", new String[]
                     {album.getId() + "" });
 
             Log.e(TAG, "delete--->" + delete);
@@ -132,18 +132,17 @@ public class SubscriptionDao implements ISubDao {
     @Override
     public void listAlbums() {
 
-        // FIXME:消灭这里bug
         SQLiteDatabase db = null;
 
         List<Album> result = new ArrayList<>();
 
         try {
-            db = mXimalayaDBHelper.getWritableDatabase();
+            db = mXimalayaDBHelper.getReadableDatabase();
             db.beginTransaction();
 
             // 获取所有数据一直传null就可以了
-            Cursor query = db.query(Constants.DB_NAME, null, null, null, null,
-                    null, null);
+            Cursor query = db.query(Constants.SUB_TB_NAME, null, null, null, null,
+                    null, "_id  desc");
 
             // 封装数据
             while (query.moveToNext()) {
@@ -190,7 +189,6 @@ public class SubscriptionDao implements ISubDao {
             db.setTransactionSuccessful();
 
         } catch (Exception e) {
-            // FIXME:这里
             e.printStackTrace();
         } finally {
 
@@ -202,6 +200,8 @@ public class SubscriptionDao implements ISubDao {
                 db.close();
             }
 
+            // 把数据通知出去
+            // mCallback.onSubListLoaded(result);
         }
     }
 }

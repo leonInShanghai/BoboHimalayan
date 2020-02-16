@@ -1,6 +1,7 @@
 package com.bobo.himalayan.presenters;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.bobo.himalayan.data.XimalayaApi;
 import com.bobo.himalayan.interfaces.IRcommendViewCallback;
@@ -26,6 +27,9 @@ public class RecommendPresenter implements IRecommendPresenter {
     private List<IRcommendViewCallback> mCallbacks = new ArrayList<>();
 
     private List<Album> mCurrentRecommend = null;
+
+
+    private List<Album> mRecommendList;
 
 
     /**
@@ -67,6 +71,15 @@ public class RecommendPresenter implements IRecommendPresenter {
     @Override
     public void getRecommendList() {
 
+        // 如果当前内容不为空直接显示当前的内容
+        if (mRecommendList != null && mRecommendList.size() > 0) {
+
+            Log.e("getRecommendList()","当前内容不为空直接显示当前的内容");
+
+            handlerRecommendResult(mRecommendList);
+            return;
+        }
+
         // 开始网络请求显示loading
         updateLoading();
 
@@ -77,11 +90,11 @@ public class RecommendPresenter implements IRecommendPresenter {
                 LogUtil.d(TAG, "thread name--->" + Thread.currentThread().getName());
                 //数据获取成功
                 if (gussLikeAlbumList != null) {
-                    List<Album> albumList = gussLikeAlbumList.getAlbumList();
+                    mRecommendList = gussLikeAlbumList.getAlbumList();
 
                     //数据请求回来更新UI
                     //upRecommendUI(albumList);
-                    handlerRecommendResult(albumList);
+                    handlerRecommendResult(mRecommendList);
                 }
             }
 

@@ -29,7 +29,7 @@ import java.util.List;
  * Functions: 推荐页面的fragment
  */
 public class RecommendFragmnet extends BaseFragment implements IRcommendViewCallback, UILoader.
-        OnRetryClickListener, AlbumListAdapter.OnRecommendItemListener {
+        OnRetryClickListener, AlbumListAdapter.OnAlbumItemListener {
 
     private View mRootView;
 
@@ -92,7 +92,7 @@ public class RecommendFragmnet extends BaseFragment implements IRcommendViewCall
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        //设置item之间的间距
+        // 设置item之间的间距
         mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView
@@ -107,7 +107,7 @@ public class RecommendFragmnet extends BaseFragment implements IRcommendViewCall
         //RecyclerView 的使用③设置适配器
         mRecommendListAdapter = new AlbumListAdapter();
         mRecyclerView.setAdapter(mRecommendListAdapter);
-        mRecommendListAdapter.setOnRecommendItemListener(this);
+        mRecommendListAdapter.setOnAlbumItemListener(this);
 
         return mRootView;
     }

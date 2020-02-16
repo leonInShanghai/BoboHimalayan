@@ -16,8 +16,10 @@
             android:src="@mipmap/content_empty" />
 
         <TextView
+            android:id="@+id/empty_view_tips_tv"
             android:layout_marginTop="9dp"
             android:layout_width="wrap_content"
+            android:textSize="18sp"
             android:text="呜呜～没有内容.."
             android:layout_height="wrap_content" />
 

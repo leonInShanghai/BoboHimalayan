@@ -28,6 +28,7 @@ import com.bobo.himalayan.interfaces.ISubscriptionCallback;
 import com.bobo.himalayan.presenters.AlbumDetailPresenter;
 import com.bobo.himalayan.presenters.PlayerPresenter;
 import com.bobo.himalayan.presenters.SubscritptionPresenter;
+import com.bobo.himalayan.utils.Constants;
 import com.bobo.himalayan.utils.ImageBlur;
 import com.bobo.himalayan.views.RoundRectImageView;
 import com.bobo.himalayan.views.UILoader;
@@ -165,6 +166,7 @@ public class DetailActivity extends BaseActivity implements IAlbumDetailViewCall
 
         // 订阅相关的Presenter
         mSubscritptionPresenter = SubscritptionPresenter.getInstance();
+        mSubscritptionPresenter.getSubcriptionList();
         mSubscritptionPresenter.registerViewCallback(this);
     }
 
@@ -235,10 +237,10 @@ public class DetailActivity extends BaseActivity implements IAlbumDetailViewCall
         }
     }
 
-    //初始化各个子控件
+    // 初始化各个子控件
     private void initView() {
 
-        //装显示每一集的listview的容器
+        // 装显示每一集的listview的容器
         mDetailListContainer = findViewById(R.id.detail_list_container);
 
         if (mUiLoader == null) {
@@ -467,9 +469,9 @@ public class DetailActivity extends BaseActivity implements IAlbumDetailViewCall
     public void onLoaderMoreFinished(int size) {
 
         if (size > 0) {
-            Toast.makeText(DetailActivity.this, "成功加载" + size, Toast.LENGTH_SHORT).show();
+            Toast.makeText(DetailActivity.this, "成功加载" + size + "条内容", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(DetailActivity.this, "没有更多数据" + size, Toast.LENGTH_SHORT).show();
+            Toast.makeText(DetailActivity.this, "没有更多数据", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -606,25 +608,27 @@ public class DetailActivity extends BaseActivity implements IAlbumDetailViewCall
     public void onAddResult(boolean isSuccess) {
         Log.e("onAddResult:",isSuccess +"");
 
-        if (isSuccess){
-            // 如果订阅成功（添加到数据库成功），那就修改UI成取消订阅
-            mSubBtn.setText(R.string.cancel_sub_tips_text);
-        }
+        /// 注释原因：在onSubscritpionsLoaded方法中处理
+//        if (isSuccess){
+//            // 如果订阅成功（添加到数据库成功），那就修改UI成取消订阅
+//            mSubBtn.setText(R.string.cancel_sub_tips_text);
+//        }
 
         // toast提示
-        String tipsText = getString(isSuccess ? R.string.cancel_sub_tips_text : R.string.sub_tip_text);
+        String tipsText = isSuccess ? "订阅成功" : "订阅失败";
         Toast.makeText(this, tipsText, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDeleteResult(boolean isSuccess) {
-        if (isSuccess){
-            // 如果取消订阅成功（添加到数据库成功），那就修改UI成取消订阅
-            mSubBtn.setText(R.string.sub_tip_text);
-        }
+        /// 注释原因：在onSubscritpionsLoaded方法中处理
+//        if (isSuccess){
+//            // 如果取消订阅成功（添加到数据库成功），那就修改UI成取消订阅
+//            mSubBtn.setText(R.string.sub_tip_text);
+//        }
 
         // toast提示
-        String tipsText = getString(isSuccess ? R.string.cancel_sub_tips_text : R.string.sub_tip_text);
+        String tipsText = isSuccess ? "删除成功" : "删除失败";
         Toast.makeText(this, tipsText, Toast.LENGTH_SHORT).show();
     }
 
@@ -632,6 +636,22 @@ public class DetailActivity extends BaseActivity implements IAlbumDetailViewCall
     public void onSubscritpionsLoaded(List<Album> albums) {
 
         // 这个页面不需要处理
+        for (Album album : albums) {
+            Log.e(TAG, "album -->" + album.getAlbumTitle());
+
+        }
         Log.e("111111111111111", albums.size() + "");
+
+        // 我增加校验是否订阅（后台退出app再进时这里会起作用）
+        updateSubState();
+    }
+
+    /**
+     * 当用户订阅数量满了会回调这个方法（不能超过100条）
+     */
+    @Override
+    public void onSubFull() {
+       // 处理一个即可
+       Toast.makeText(this, "订阅数量不可超过" + Constants.MAX_SUB_COUNT, Toast.LENGTH_SHORT).show();
     }
 }

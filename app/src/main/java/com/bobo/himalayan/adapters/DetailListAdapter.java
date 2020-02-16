@@ -17,7 +17,7 @@ import com.bobo.himalayan.R;
 
 /**
  * Created by 公众号IT波 on 2019/11/24. Copyright © Leon. All rights reserved.
- * Functions: 点击推荐条目进入详情页 recycleview的适配器
+ * Functions: 点击推荐条目进入详情页 和 历史页面 recycleview的适配器
  */
 public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.InnerHolder> {
 
@@ -32,6 +32,9 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
 
     //供外界调用的点击事件接口
     private ItemClickListener mItemClickListener = null;
+
+    // 供外界调用的长按事件回调接口
+    private ItemLongClickListener mItemLongClickListener = null;
 
     @NonNull
     @Override
@@ -65,7 +68,7 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
         TextView updateDateTv = itemView.findViewById(R.id.dwtail_item_update_time);
 
         //设置数据
-        Track track = mDetailData.get(position);
+        final Track track = mDetailData.get(position);
 
         //设置数据
         orderTv.setText(track.getOrderNum() + 1 + "");
@@ -88,6 +91,20 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
                     //参数需要有列表位置
                     mItemClickListener.onItemClick(mDetailData, position);
                 }
+            }
+        });
+
+        // 设置item的长按点击事件
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                if (mItemLongClickListener != null) {
+                    mItemLongClickListener.onItemLongClick(track);
+                }
+
+                // 返回true表示消费掉了点击事件
+                return true;
             }
         });
     }
@@ -135,5 +152,18 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.In
          * @param position
          */
         void onItemClick(List<Track> detailData, int position);
+    }
+
+
+    public void setItemLongClickListener(ItemLongClickListener listener){
+        this.mItemLongClickListener = listener;
+    }
+
+    /**
+     * 长按时间回调接口
+     */
+    public interface ItemLongClickListener{
+
+        void onItemLongClick(Track track);
     }
 }

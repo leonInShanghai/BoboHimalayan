@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_confirm_dialog_bg"
+        android:layout_height="150dp">
+
+        <TextView
+            android:layout_marginTop="38dp"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:text="取消订阅该专辑吗？"
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:id="@+id/dialog_button_container"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:id="@+id/dialog_cancel_sub"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#c5c0c0"
+                android:layout_height="match_parent"
+                android:text="取消订阅"
+                android:textSize="20sp"/>
+
+            <!-- 中间分隔线 -->
+            <View
+                android:layout_width="1dp"
+                android:background="#dfdfdf"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/dialog_give_up_tv"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="@color/main_color"
+                android:text="我再想想"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+        <!-- 分隔线相对布局后来者居上 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_above="@+id/dialog_button_container"
+            android:background="#dfdfdf"
+            android:layout_height="1dp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

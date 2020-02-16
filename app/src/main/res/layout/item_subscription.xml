@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
     <!-- 这里外面包裹一层布局不是为了下拉刷新和上拉加载更多，只是为了增加一个回弹效果 -->
     <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
@@ -13,7 +11,7 @@
 
         <!--android:overScrollMode="never" 去掉划不动的时候的贝塞尔曲线-->
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recommend_list"
+            android:id="@+id/sub_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never" />

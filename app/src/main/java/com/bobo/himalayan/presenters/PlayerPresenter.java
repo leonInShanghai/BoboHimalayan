@@ -128,6 +128,7 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
             isPlayListSet = true;
             mCurrentTrack = list.get(playIndex);
             mCurrentIndex = playIndex;
+
         } else {
             LogUtil.e(TAG, "mPlayerManager is null");
         }
@@ -327,12 +328,18 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
                 // 2.把内容设置给播放器
                 List<Track> tracks = trackList.getTracks();
 
+                // FIXME:新增加解决第一次随便听听的时候没有图片 没有列表的bug
+                for (IPlayerCallback iPlayerCallback : mIPlayerCallbacks) {
+                    iPlayerCallback.onListLoaded(tracks);
+                }
+
                 if (tracks != null && tracks.size() > 0) {
                     mPlayerManager.setPlayList(tracks, DEFAULT_PLAY_INDEX);
                     isPlayListSet = true;
                     mCurrentTrack = tracks.get(DEFAULT_PLAY_INDEX);
                     mCurrentIndex = DEFAULT_PLAY_INDEX;
                 }
+
             }
 
             @Override
@@ -348,6 +355,13 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
     @Override
     public void registerViewCallback(IPlayerCallback iPlayerCallback) {
 
+        if (!mIPlayerCallbacks.contains(iPlayerCallback)) {
+            mIPlayerCallbacks.add(iPlayerCallback);
+        }
+
+        // FIXME:修正viewpager位置不对的bug 新方案更新之前先让UI的Pager有数据
+        getPlayList();
+
         // 通知当前的节目
         iPlayerCallback.onTrackUpdated(mCurrentTrack, mCurrentIndex);
         iPlayerCallback.onProgressChange(mCurrentProgress, mProgressDuration);
@@ -361,10 +375,6 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
 
         //进入页面就回调一次 设置ui层播放模式
         iPlayerCallback.onPlayModeChange(mCurrentPlayMode);
-
-        if (!mIPlayerCallbacks.contains(iPlayerCallback)) {
-            mIPlayerCallbacks.add(iPlayerCallback);
-        }
     }
 
     /**
@@ -479,6 +489,12 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
     public void onSoundSwitch(PlayableModel lastMode, PlayableModel curModel) {
         Log.e(TAG, "onSoundSwitch");
 
+
+        // 调试代码
+        if (curModel != null){
+            Log.e(TAG, "cutModel : " + curModel.getKind());
+        }
+
         /**
          * curModel代表的是当前播放的内容 通过getKind()方法来获取它是什么类型的
          * track 表示的是 track类型
@@ -496,6 +512,11 @@ public class PlayerPresenter implements IPlayerPresenter, IXmAdsStatusListener, 
         if (curModel instanceof Track) {
             Track currentTrack = (Track) curModel;
             mCurrentTrack = currentTrack;
+
+            // 保存播放记录 添加到本地数据库历史表中
+            HistoryPresenter historyPresenter = HistoryPresenter.getHistoryPresenter();
+            historyPresenter.addHistory(currentTrack);
+
             //更新UI
             for (IPlayerCallback iPlayerCallback : mIPlayerCallbacks) {
                 iPlayerCallback.onTrackUpdated(mCurrentTrack, mCurrentIndex);

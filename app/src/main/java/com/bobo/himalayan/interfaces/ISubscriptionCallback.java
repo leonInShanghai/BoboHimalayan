@@ -34,4 +34,9 @@ public interface ISubscriptionCallback {
      */
     void onSubscritpionsLoaded(List<Album> albums);
 
+    /**
+     * 订阅数量满了（不能超过100条）
+     */
+    void onSubFull();
+
 }

@@ -106,7 +106,8 @@ public abstract class UILoader extends FrameLayout {
         mEmptyView.setVisibility(mCurrentStatus == UIStatus.EMPTY ? VISIBLE : GONE);
     }
 
-    private View getEmptyView() {
+    // 当有定制化需求的时候可以重写这个空界面
+    protected View getEmptyView() {
         return LayoutInflater.from(getContext()).inflate(R.layout.fragment_empty_view, this, false);
     }
 

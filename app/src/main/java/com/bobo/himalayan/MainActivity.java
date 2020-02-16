@@ -85,7 +85,9 @@ public class MainActivity extends FragmentActivity implements IPlayerCallback {
             public void onTabClick(int index) {
                 LogUtil.e(TAG, "click inex is -->" + index);
                 if (mContentPager != null) {
-                    mContentPager.setCurrentItem(index);
+
+                    // 第二个参数为false不要动画效果
+                    mContentPager.setCurrentItem(index, false);
                 }
             }
         });

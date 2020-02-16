@@ -7,6 +7,7 @@ import com.bobo.himalayan.data.ISubDaoCallback;
 import com.bobo.himalayan.data.SubscriptionDao;
 import com.bobo.himalayan.interfaces.ISubscriptionCallback;
 import com.bobo.himalayan.interfaces.ISubscriptionPresenter;
+import com.bobo.himalayan.utils.Constants;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 
 import java.util.ArrayList;
@@ -42,10 +43,11 @@ public class SubscritptionPresenter implements ISubscriptionPresenter, ISubDaoCa
 
         // 让本类实现回调方法
         mSubscriptionDao.setCallback(this);
-        listSubscriptions();
     }
 
     private void listSubscriptions(){
+
+        // 子线程操作数据库
         Observable.create(new ObservableOnSubscribe<Object>() {
             @Override
             public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
@@ -79,6 +81,19 @@ public class SubscritptionPresenter implements ISubscriptionPresenter, ISubDaoCa
 
     @Override
     public void addSubscription(final Album album) {
+
+        // 判断当前的订阅数量不能超过100条
+        if (mData.size() >= Constants.MAX_SUB_COUNT){
+
+            // 给个提示
+            for (ISubscriptionCallback callback : mCallbacks) {
+              callback.onSubFull();
+            }
+
+            return;
+        }
+
+        // 子线程操作数据库
         Observable.create(new ObservableOnSubscribe<Object>() {
             @Override
             public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
@@ -90,6 +105,8 @@ public class SubscritptionPresenter implements ISubscriptionPresenter, ISubDaoCa
 
     @Override
     public void deleteSubscription(final Album album) {
+
+        // 子线程操作数据库
         Observable.create(new ObservableOnSubscribe<Object>() {
             @Override
             public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
@@ -146,6 +163,9 @@ public class SubscritptionPresenter implements ISubscriptionPresenter, ISubDaoCa
 
     @Override
     public void onDelResult(final boolean isSuccess) {
+
+        listSubscriptions();
+
         // 删除订阅的回调-回到主线程处理
         BaseApplication.getsHandler().post(new Runnable() {
             @Override
@@ -159,6 +179,10 @@ public class SubscritptionPresenter implements ISubscriptionPresenter, ISubDaoCa
 
     @Override
     public void onSubListLoaded(final List<Album> result) {
+
+        // 一定要先请空
+        mData.clear();
+
         // 加载数据的回调
         for (Album album : result) {
             mData.put(album.getId(), album);
@@ -174,4 +198,6 @@ public class SubscritptionPresenter implements ISubscriptionPresenter, ISubDaoCa
             }
         });
     }
+
+
 }

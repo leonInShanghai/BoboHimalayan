@@ -47,7 +47,7 @@ import java.util.List;
  * Created by Leon on 2020-01-01 Copyright © Leon. All rights reserved.
  * Functions: 搜索页面
  */
-public class SearchActivity extends BaseActivity implements ISearchCallback, AlbumListAdapter.OnRecommendItemListener {
+public class SearchActivity extends BaseActivity implements ISearchCallback, AlbumListAdapter.OnAlbumItemListener {
 
     private String TAG = "SearchActivity";
 
@@ -173,6 +173,19 @@ public class SearchActivity extends BaseActivity implements ISearchCallback, Alb
                 protected View getSuccessView(ViewGroup container) {
                     return createSucessView();
                 }
+
+                @Override
+                protected View getEmptyView() {
+
+                    // 在订阅（本页面）自定义空页面布局
+                    View emptyView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_empty_view,
+                            this, false);
+
+                    TextView tipsView = emptyView.findViewById(R.id.empty_view_tips_tv);
+                    tipsView.setText(getString(R.string.search_no_conent_tips_text));
+
+                    return emptyView;
+                }
             };
 
             // 避免重复添加（判断是否已经存在）
@@ -259,7 +272,7 @@ public class SearchActivity extends BaseActivity implements ISearchCallback, Alb
     private void initEvent() {
 
         // 显示搜索结果的RecyclerView的适配器
-        mAlbumListAdapter.setOnRecommendItemListener(this);
+        mAlbumListAdapter.setOnAlbumItemListener(this);
 
         // 上拉加载更多拖拽事件的处理
         mRefreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
