@@ -6,8 +6,6 @@
 rxjava2 一个在Java VM上使用可观测的序列来组成异步的、基于事件的程序的库。</br>
 
 <a href="https://github.com/leonInShanghai/BoboHimalayan/raw/master/app/release/app-release.apk">demo</a>
-
-<a><https://github.com/leonInShanghai/BoboHimalayan/raw/master/app/release/app-release.apk>
 <div align="center">
 <img src="https://github.com/leonInShanghai/BoboHimalayan/blob/master/other/gif1.gif" >
  </div>
