@@ -5,7 +5,6 @@
 用到的第三方 或 开源框架 喜马拉雅SDK   MagicIndicator（千变万化的ViewPager指示器） Picasso(图片加载神器之一)</br>
 rxjava2 一个在Java VM上使用可观测的序列来组成异步的、基于事件的程序的库。</br>
 
-
 <div align="center">
 <img src="https://github.com/leonInShanghai/BoboHimalayan/blob/master/other/gif1.gif" >
  </div>
