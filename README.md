@@ -1,8 +1,6 @@
 # BoboHimalayan
 
-<a href="https://mp.weixin.qq.com/s?__biz=MzIzNjU5NDk1MQ==&mid=2247483698&idx=1&sn=6706c953a502c7dfcb4665
-700e1b9ee1&chksm=e8d4335adfa3ba4cd9d9704740477910c3d21b8b47e9120bce4acf91ed99c2567092527cb81e&token=29466
-2866&lang=zh_CN#rd">国内</a>
+<a href="https://mp.weixin.qq.com/s/HnXsch4sr46nmySQthx-bg">国内</a>
 
 波波拉雅（集成喜马拉雅SDK） * 什么叫框架 什么是api 什么叫sdk 就是把一些复杂的工作都做好，让使用的人特别简单。- 框架就是把复杂的事情做好
 
